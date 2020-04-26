@@ -1,0 +1,4 @@
+name: MineAndFight
+version: @version@
+main: jp.hack.minecraft.mineandfight.Main
+api-version: 1.13
