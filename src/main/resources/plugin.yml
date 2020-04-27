@@ -2,3 +2,15 @@ name: MineAndFight
 version: @version@
 main: jp.hack.minecraft.mineandfight.Main
 api-version: 1.13
+commands:
+  mineandfight:
+    description: host command
+    aliases: maf
+    usage: "Usage: /<command>"
+    permission: mineandfight.host
+    permission-message: You dont't have <permission>
+  game:
+    description: player game
+    usage: "Usage: /<command>"
+    permission: mineandfight.player
+    permission-message: You dont't have <permission>
