@@ -1,5 +1,6 @@
 package jp.hack.minecraft.mineandfight.command;
 
+import jp.hack.minecraft.mineandfight.core.Game;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,10 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 public class HostCommandExecutor implements CommandExecutor, TabExecutor {
-    JavaPlugin plugin;
+    private final Game game;
 
-    public HostCommandExecutor(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public HostCommandExecutor(Game game) {
+        this.game = game;
     }
 
     @Override
