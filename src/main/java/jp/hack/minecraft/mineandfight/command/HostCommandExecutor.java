@@ -1,6 +1,5 @@
 package jp.hack.minecraft.mineandfight.command;
 
-import jp.hack.minecraft.mineandfight.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

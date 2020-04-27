@@ -14,3 +14,10 @@ commands:
     usage: "Usage: /<command>"
     permission: mineandfight.player
     permission-message: You dont't have <permission>
+permissions:
+  mineandfight.host:
+    description: game master permission
+    default: op
+  mineandfight.player:
+    description: game player's permission
+    default: true
