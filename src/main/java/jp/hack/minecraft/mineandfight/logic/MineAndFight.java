@@ -3,6 +3,7 @@ package jp.hack.minecraft.mineandfight.logic;
 import jp.hack.minecraft.mineandfight.core.Game;
 import jp.hack.minecraft.mineandfight.core.Player;
 import jp.hack.minecraft.mineandfight.core.Team;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -29,6 +30,15 @@ public class MineAndFight implements Listener {
     public void onBlockBreakEvent(BlockBreakEvent event){
         logger.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
+        Player breaker = game.findPlayer(event.getPlayer().getUniqueId());
+
+        final String oreName = Material.EMERALD_ORE.getData().getName();
+        String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
+
+        if(blockName == oreName){
+            breaker.setScore( breaker.getScore() + ( breaker.getBounty() + 1 ) );
+            breaker.setBounty(0);
+        }
     }
 
     @EventHandler
