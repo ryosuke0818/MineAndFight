@@ -6,6 +6,7 @@ public class Player {
     private final UUID uuid;
     private int teamId;
     private int score;
+    private int bounty;
 
     public Player(UUID uuid){
         this.uuid = uuid;
@@ -29,5 +30,13 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getBounty() {
+        return bounty;
+    }
+
+    public void setBounty(int bounty) {
+        this.bounty = bounty;
     }
 }

@@ -3,6 +3,7 @@ package jp.hack.minecraft.mineandfight.core;
 public class Team {
     private final int teamId;
     private String teamColor;
+    private int score;
 
     public Team(int teamId){
         this.teamId = teamId;
@@ -18,5 +19,13 @@ public class Team {
 
     public void setTeamColor(String teamColor) {
         this.teamColor = teamColor;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
