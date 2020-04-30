@@ -35,7 +35,7 @@ public class MineAndFight implements Listener {
         final String oreName = Material.EMERALD_ORE.getData().getName();
         String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
 
-        if(blockName == oreName){
+        if(blockName.equals(oreName)){
             breaker.setScore( breaker.getScore() + ( breaker.getBounty() + 1 ) );
             breaker.setBounty(0);
         }
