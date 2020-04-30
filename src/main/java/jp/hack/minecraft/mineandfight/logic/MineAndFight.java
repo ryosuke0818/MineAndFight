@@ -43,15 +43,10 @@ public class MineAndFight implements Listener {
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-<<<<<<< HEAD
         if (event.getEntity().getKiller() != null) {
             Player killed = game.findPlayer(event.getEntity().getUniqueId());
             Player killer = game.findPlayer(event.getEntity().getKiller().getUniqueId());
-=======
-        LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
->>>>>>> 0e925faa164ec2ab829eae566c1777e3dda4caa4
-
-            logger.info(String.format("onPlayerDeathEvent: %s -> %s", killed, killer);
+            LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
             Team killerTeam = new Team(killer.getTeamId());
 
@@ -60,9 +55,9 @@ public class MineAndFight implements Listener {
             killerTeam.setScore(killerTeam.getScore() + killed.getBounty());
             killed.setBounty(0);
 
-            Scoreboard killerScoreboard = new Scoreboard(killer);
+            Scoreboard killerScoreboard = new Scoreboard(killer.getUuid(), killerTeam.getTeamColor());
             killerScoreboard.setScore(killer.getScore());
-            killerScoreboard.setTeamScore(killer.getUuid(), killerTeam.getScore());
+            killerScoreboard.setTeamScore(killerTeam.getScore());
         }
     }
 }

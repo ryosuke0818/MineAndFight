@@ -39,10 +39,4 @@ public class Game {
     public Team getTeam(int teamId){
         return teams.get(teamId);
     }
-
-    public int getTeamScore(int teamId){
-        int playerScoreSum =  players.values().stream().filter(p->p.getTeamId() == teamId).mapToInt(p->p.getScore()).sum();
-        int teamScore = getTeam(teamId).getScore();
-        return  playerScoreSum + teamScore;
-    }
 }
