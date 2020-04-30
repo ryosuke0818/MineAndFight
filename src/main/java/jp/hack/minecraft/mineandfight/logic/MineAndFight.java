@@ -2,6 +2,7 @@ package jp.hack.minecraft.mineandfight.logic;
 
 import jp.hack.minecraft.mineandfight.core.Game;
 import jp.hack.minecraft.mineandfight.core.Player;
+import jp.hack.minecraft.mineandfight.core.Scoreboard;
 import jp.hack.minecraft.mineandfight.core.Team;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -43,16 +44,22 @@ public class MineAndFight implements Listener {
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        logger.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+        if (event.getEntity().getKiller() != null) {
+            Player killed = game.findPlayer(event.getEntity().getUniqueId());
+            Player killer = game.findPlayer(event.getEntity().getKiller().getUniqueId());
 
-        Player killed = game.findPlayer(event.getEntity().getUniqueId());
-        Player killer = game.findPlayer(event.getEntity().getKiller().getUniqueId());
+            logger.info(String.format("onPlayerDeathEvent: %s -> %s", killed, killer);
 
-        Team killerTeam = new Team(killer.getTeamId());
+            Team killerTeam = new Team(killer.getTeamId());
 
-        killer.setScore(killer.getScore() + killed.getBounty());
-        killer.setBounty(killer.getBounty() + 1);
-        killerTeam.setScore(killerTeam.getScore() + killed.getBounty());
-        killed.setBounty(0);
+            killer.setScore(killer.getScore() + killed.getBounty());
+            killer.setBounty(killer.getBounty() + 1);
+            killerTeam.setScore(killerTeam.getScore() + killed.getBounty());
+            killed.setBounty(0);
+
+            Scoreboard killerScoreboard = new Scoreboard(killer);
+            killerScoreboard.setScore(killer.getScore());
+            killerScoreboard.setTeamScore(killer.getUuid(), killerTeam.getScore());
+        }
     }
 }

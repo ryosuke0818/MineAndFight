@@ -4,6 +4,8 @@ import jp.hack.minecraft.mineandfight.command.HostCommandExecutor;
 import jp.hack.minecraft.mineandfight.command.PlayerCommandExecutor;
 import jp.hack.minecraft.mineandfight.core.Game;
 import jp.hack.minecraft.mineandfight.logic.MineAndFight;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
