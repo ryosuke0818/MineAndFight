@@ -14,29 +14,28 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.logging.Logger;
 
 public class MineAndFight implements Listener {
-    private Logger logger;
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
 
     private final Game game;
     public MineAndFight(Game game) {
         this.game = game;
-        this.logger = game.getPlugin().getLogger();
     }
 
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
-        logger.info(String.format("onLogin: %s", event.getPlayer().getName()));
+        LOGGER.info(String.format("onLogin: %s", event.getPlayer().getName()));
     }
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event){
-        logger.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
+        LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
         Player breaker = game.findPlayer(event.getPlayer().getUniqueId());
 
         final String oreName = Material.EMERALD_ORE.getData().getName();
         String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
 
-        if(blockName == oreName){
+        if(blockName.equals(oreName)){
             breaker.setScore( breaker.getScore() + ( breaker.getBounty() + 1 ) );
             breaker.setBounty(0);
         }
@@ -44,9 +43,13 @@ public class MineAndFight implements Listener {
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
+<<<<<<< HEAD
         if (event.getEntity().getKiller() != null) {
             Player killed = game.findPlayer(event.getEntity().getUniqueId());
             Player killer = game.findPlayer(event.getEntity().getKiller().getUniqueId());
+=======
+        LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+>>>>>>> 0e925faa164ec2ab829eae566c1777e3dda4caa4
 
             logger.info(String.format("onPlayerDeathEvent: %s -> %s", killed, killer);
 
