@@ -13,22 +13,21 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.logging.Logger;
 
 public class MineAndFight implements Listener {
-    private Logger logger;
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
 
     private final Game game;
     public MineAndFight(Game game) {
         this.game = game;
-        this.logger = game.getPlugin().getLogger();
     }
 
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
-        logger.info(String.format("onLogin: %s", event.getPlayer().getName()));
+        LOGGER.info(String.format("onLogin: %s", event.getPlayer().getName()));
     }
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event){
-        logger.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
+        LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
         Player breaker = game.findPlayer(event.getPlayer().getUniqueId());
 
@@ -43,7 +42,7 @@ public class MineAndFight implements Listener {
 
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        logger.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+        LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
         Player killed = game.findPlayer(event.getEntity().getUniqueId());
         Player killer = game.findPlayer(event.getEntity().getKiller().getUniqueId());
