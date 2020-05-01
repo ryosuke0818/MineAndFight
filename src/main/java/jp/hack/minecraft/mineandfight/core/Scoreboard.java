@@ -18,19 +18,17 @@ public class Scoreboard {
     private final org.bukkit.scoreboard.Scoreboard scoreboard = manager.getNewScoreboard();
 
     private final Objective playerObjective;
-    private final Objective teamObjective;
 
-    private Score teamScore;
     private Score score;
+    private Score teamScore;
 
     private final Player player;
 
-    public Scoreboard(UUID uuid, String teamName) {
+    public Scoreboard(UUID uuid) {
         player = Bukkit.getPlayer(uuid);
         playerObjective = scoreboard.registerNewObjective(player.getName(), "dummy", displayName);
-        teamObjective = scoreboard.getObjective(teamName);
         score = playerObjective.getScore("YourScore:");
-        teamScore = teamObjective.getScore("TeamScore:");
+        teamScore = playerObjective.getScore("TeamScore:");
     }
 
     public void setTeamScore(int score) {
@@ -38,16 +36,8 @@ public class Scoreboard {
         player.setScoreboard(scoreboard);
     }
 
-    public int getTeamScore() {
-        return teamScore.getScore();
-    }
-
     public void setScore(int score) {
         this.score.setScore(score);
         player.setScoreboard(scoreboard);
-    }
-
-    public int getScore() {
-        return score.getScore();
     }
 }
