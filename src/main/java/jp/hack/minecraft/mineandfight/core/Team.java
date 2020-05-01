@@ -1,7 +1,5 @@
 package jp.hack.minecraft.mineandfight.core;
 
-import java.util.UUID;
-
 public class Team {
     private final int teamId;
     private String teamColor;

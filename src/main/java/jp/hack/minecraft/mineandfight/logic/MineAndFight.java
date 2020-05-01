@@ -10,10 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Logger;
 
 public class MineAndFight implements Listener {
@@ -62,7 +60,7 @@ public class MineAndFight implements Listener {
             for (int i=0; i<teamMate.size(); i++){
                 Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
                 playerScoreboard.setScore(teamMate.get(i).getScore());
-                playerScoreboard.setTeamScore(teamMate.get(i).getScore());
+                playerScoreboard.setTeamScore(killerTeam.getScore());
             }
         }
     }
