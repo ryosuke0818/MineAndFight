@@ -38,7 +38,6 @@ public class MineAndFight implements Listener {
 
         if(blockName.equals(oreName)){
             breaker.setScore( breaker.getScore() + ( breaker.getBounty() + 1 ) );
-            breaker.setBounty(0);
         }
     }
 
@@ -68,5 +67,9 @@ public class MineAndFight implements Listener {
             } else {
             }
         }
+    }
+
+    public void onStart() {
+
     }
 }

@@ -1,6 +1,7 @@
 package jp.hack.minecraft.mineandfight.command;
 
 import jp.hack.minecraft.mineandfight.core.Game;
+import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.Scoreboard;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,14 +27,43 @@ public class HostCommandExecutor implements CommandExecutor, TabExecutor {
 
         if(player.isOp()) {
             switch (args[0]) {
-                case "start":
+                case "game":
+                    try {
+                        int gameNumber = Integer.parseInt(args[1]);
+                    }catch (NumberFormatException e){
+                        return false;
+                    }
+                    //ゲーム番号を取得
 
-                    return true;
+                    switch (args[2]) {
+
+                        case "start":
+
+                            GameManager gameManager = GameManager.getInstance();
+                            break;
+
+                        case "add":
+
+                            String teamName = args[3];
+                            String playerName = args[4];
+
+                            if(teamName.equals(null) || playerName.equals(null)){
+                                return false;
+                            }
+                            break;
+
+                        default:
+                            return false;
+                    }
+
+                    break;
                 default:
                     return false;
             }
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
