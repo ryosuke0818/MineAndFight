@@ -4,12 +4,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class Game {
+public abstract class Game implements Runnable {
     private final JavaPlugin plugin;
     private Map<Integer, Team> teams = new ConcurrentHashMap<>();
     private Map<UUID, Player> players = new ConcurrentHashMap<>();
+    private Future future;
 
     public Game(JavaPlugin plugin){
         this.plugin = plugin;
@@ -45,4 +50,8 @@ public class Game {
         int teamScore = getTeam(teamId).getScore();
         return  playerScoreSum + teamScore;
     }
+
+    abstract public void onStart();
+    abstract public void onStop();
+    abstract public void onEnd();
 }
