@@ -39,9 +39,11 @@ public class MineAndFight extends Game implements Listener {
     }
 
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        if (event.getEntity().getKiller() != null) {
-            Player killed = findPlayer(event.getEntity().getUniqueId());
+        Player killed = findPlayer(event.getEntity().getUniqueId());
+
+        if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
             Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
+            LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
             Team killerTeam = new Team(killer.getTeamId());
 
@@ -51,10 +53,11 @@ public class MineAndFight extends Game implements Listener {
             killed.setBounty(0);
 
             ArrayList<Player> teamMate = (ArrayList<Player>) getTeamPlayers(killerTeam.getTeamId());
-            for (int i=0; i<teamMate.size(); i++){
+            for (int i = 0; i < teamMate.size(); i++) {
                 Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
                 playerScoreboard.setScore(teamMate.get(i).getScore());
-                playerScoreboard.setTeamScore(killerTeam.getScore());
+                //playerScoreboard.setTeamScore(killerTeam.getScore());
+                playerScoreboard.setScoreboard();
             }
         }
     }
