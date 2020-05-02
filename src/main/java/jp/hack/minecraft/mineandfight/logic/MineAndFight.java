@@ -62,11 +62,10 @@ public class MineAndFight implements Listener {
                 for (int i = 0; i < teamMate.size(); i++) {
                     Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
                     playerScoreboard.setScore(teamMate.get(i).getScore());
-                    playerScoreboard.setTeamScore(killerTeam.getScore());
+                    //playerScoreboard.setTeamScore(killerTeam.getScore());
                     playerScoreboard.setScoreboard();
                 }
             } else {
-
             }
         }
     }
