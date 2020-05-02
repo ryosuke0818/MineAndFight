@@ -45,6 +45,10 @@ public abstract class Game implements Runnable {
         return teams.get(teamId);
     }
 
+    public void setTeam(Team team, int teamId){
+        teams.put(teamId, team);
+    }
+
     public int getTeamScore(int teamId){
         int playerScoreSum =  players.values().stream().filter(p->p.getTeamId() == teamId).mapToInt(p->p.getScore()).sum();
         int teamScore = getTeam(teamId).getScore();
