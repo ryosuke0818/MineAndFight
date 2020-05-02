@@ -1,5 +1,9 @@
 package jp.hack.minecraft.mineandfight.core;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
@@ -8,16 +12,41 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public abstract class Game implements Runnable {
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
     private final JavaPlugin plugin;
+    private String id;
     private Map<Integer, Team> teams = new ConcurrentHashMap<>();
     private Map<UUID, Player> players = new ConcurrentHashMap<>();
     private Future future;
+    private transient boolean isFinish = false;
 
-    public Game(JavaPlugin plugin){
+    public Game(JavaPlugin plugin, String id){
         this.plugin = plugin;
+        this.id = id;
+    }
+
+    public String getId(){
+        return id;
+    }
+
+    Future start(ExecutorService pool){
+        this.future = pool.submit(this);
+        return future;
+    }
+
+    void cancel(){
+        if(this.future!=null){
+            this.future.cancel(true);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public JavaPlugin getPlugin() {
@@ -51,7 +80,42 @@ public abstract class Game implements Runnable {
         return  playerScoreSum + teamScore;
     }
 
+    public void onLogin(PlayerJoinEvent event){
+        LOGGER.info(String.format("onLogin: %s", event.getPlayer().getName()));
+    }
+
+    public void onBlockBreakEvent(BlockBreakEvent event) {
+        LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
+    }
+
+    public void onPlayerDeathEvent(PlayerDeathEvent event) {
+        LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+    }
+
+    @Override
+    public void run() {
+        isFinish = false;
+        try {
+            onStart();
+            long startTime = System.currentTimeMillis();
+            long currentTime = startTime;
+            while (!isFinish) {
+                if(onTask(currentTime - startTime) != true ) break;
+                Thread.sleep(1000);
+                currentTime = System.currentTimeMillis();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            isFinish = true;
+            onEnd();
+            GameManager.getInstance().remove(getId());
+        }
+    }
+
+
     abstract public void onStart();
     abstract public void onStop();
     abstract public void onEnd();
+    abstract public boolean onTask(long dt);
 }

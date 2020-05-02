@@ -10,10 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 public class PlayerCommandExecutor implements CommandExecutor, TabExecutor {
-    private final Game game;
+    private final JavaPlugin plugin;
 
-    public PlayerCommandExecutor(Game game) {
-        this.game = game;
+    public PlayerCommandExecutor(JavaPlugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
