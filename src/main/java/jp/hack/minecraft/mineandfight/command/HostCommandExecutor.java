@@ -14,11 +14,11 @@ import org.bukkit.scoreboard.Team;
 import java.util.List;
 
 public class HostCommandExecutor implements CommandExecutor, TabExecutor {
-    private final Game game;
+    private final JavaPlugin plugin;
     Scoreboard scoreboard;
 
-    public HostCommandExecutor(Game game) {
-        this.game = game;
+    public HostCommandExecutor(JavaPlugin plugin) {
+        this.plugin = plugin;
     }
 
     @Override
