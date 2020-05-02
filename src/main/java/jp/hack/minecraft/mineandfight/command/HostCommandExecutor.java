@@ -28,7 +28,6 @@ public class HostCommandExecutor implements CommandExecutor, TabExecutor {
             switch (args[0]) {
                 case "start":
 
-
                     return true;
                 default:
                     return false;

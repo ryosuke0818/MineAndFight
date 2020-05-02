@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class MineAndFight implements Listener {
@@ -55,9 +56,18 @@ public class MineAndFight implements Listener {
             killerTeam.setScore(killerTeam.getScore() + killed.getBounty());
             killed.setBounty(0);
 
+<<<<<<< HEAD
             Scoreboard killerScoreboard = new Scoreboard(killer.getUuid());
             killerScoreboard.setScore(killer.getScore());
             //killerScoreboard.setTeamScore(killer.getUuid(), killerTeam.getScore());
+=======
+            ArrayList<Player> teamMate = (ArrayList<Player>) game.getTeamPlayers(killerTeam.getTeamId());
+            for (int i=0; i<teamMate.size(); i++){
+                Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
+                playerScoreboard.setScore(teamMate.get(i).getScore());
+                playerScoreboard.setTeamScore(killerTeam.getScore());
+            }
+>>>>>>> ad70d114872b59f0fd44d86ea49f2ce47686b0b8
         }
     }
 }
