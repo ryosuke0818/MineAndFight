@@ -11,33 +11,31 @@ import java.util.UUID;
 
 
 public class Scoreboard {
-
     private final String displayName = ChatColor.GREEN +"Score";
-
-    private ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private final org.bukkit.scoreboard.Scoreboard scoreboard = manager.getNewScoreboard();
-
-    private final Objective playerObjective;
-
+    private final ScoreboardManager manager = Bukkit.getScoreboardManager();
+    private org.bukkit.scoreboard.Scoreboard scoreboard = manager.getNewScoreboard();
+    private Player player;
+    private Objective playerObjective;
     private Score score;
     private Score teamScore;
-
-    private final Player player;
 
     public Scoreboard(UUID uuid) {
         player = Bukkit.getPlayer(uuid);
         playerObjective = scoreboard.registerNewObjective(player.getName(), "dummy", displayName);
+
         score = playerObjective.getScore("YourScore:");
         teamScore = playerObjective.getScore("TeamScore:");
     }
 
     public void setTeamScore(int score) {
         teamScore.setScore(score);
-        player.setScoreboard(scoreboard);
     }
 
     public void setScore(int score) {
         this.score.setScore(score);
+    }
+
+    public void setScoreboard(){
         player.setScoreboard(scoreboard);
     }
 }
