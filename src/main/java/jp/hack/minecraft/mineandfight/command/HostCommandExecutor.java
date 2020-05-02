@@ -40,7 +40,6 @@ public class HostCommandExecutor implements CommandExecutor, TabExecutor {
                         case "start":
 
                             GameManager gameManager = GameManager.getInstance();
-                            gameManager.start(game);
                             break;
 
                         case "add":

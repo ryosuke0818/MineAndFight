@@ -5,11 +5,9 @@ import jp.hack.minecraft.mineandfight.core.Player;
 import jp.hack.minecraft.mineandfight.core.Scoreboard;
 import jp.hack.minecraft.mineandfight.core.Team;
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -61,11 +59,7 @@ public class MineAndFight extends Game implements Listener {
         }
     }
 
-<<<<<<< HEAD
-    public void onStart() {
 
-    }
-=======
     @Override
     public void onStart() {
         //TODO ゲームが開始されたら呼ばれます。
@@ -90,6 +84,4 @@ public class MineAndFight extends Game implements Listener {
         if(dt < gametime) return true;
         return false;
     }
-
->>>>>>> 186700cad43789de75b74f0153a940193184479e
 }
