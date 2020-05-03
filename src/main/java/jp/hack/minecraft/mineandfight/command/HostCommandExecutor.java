@@ -2,14 +2,13 @@ package jp.hack.minecraft.mineandfight.command;
 
 import jp.hack.minecraft.mineandfight.core.Game;
 import jp.hack.minecraft.mineandfight.core.GameManager;
+import jp.hack.minecraft.mineandfight.core.Player;
 import jp.hack.minecraft.mineandfight.core.Scoreboard;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Team;
 
 import java.util.List;
 
@@ -23,42 +22,41 @@ public class HostCommandExecutor implements CommandExecutor, TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
+        org.bukkit.entity.Player player = (org.bukkit.entity.Player) sender;
 
         if(player.isOp()) {
+
             switch (args[0]) {
                 case "game":
-                    try {
-                        int gameNumber = Integer.parseInt(args[1]);
-                    }catch (NumberFormatException e){
-                        return false;
-                    }
-                    //ゲーム番号を取得
 
-                    switch (args[2]) {
+                    String gameId;
+                    GameManager gameManager = GameManager.getInstance();
+                    Game game;
+
+                    switch (args[1]) {
 
                         case "start":
 
-                            GameManager gameManager = GameManager.getInstance();
-                            break;
+                            gameId = args[2];
 
-                        case "add":
-
-                            String teamName = args[3];
-                            String playerName = args[4];
-
-                            if(teamName.equals(null) || playerName.equals(null)){
-                                return false;
+                            game = gameManager.getGame(gameId);
+                            gameManager.start(game);
+                            for (Player p : game.getJoinPlayers()) {
+                                Scoreboard scoreboard = new Scoreboard(p.getUuid());
                             }
-                            break;
-
-                        case "addTeam":
-
-                            
                             break;
 
                         case "create":
 
+                            gameId = args[2];
+
+                            game = gameManager.getGame(gameId);
+
+                            break;
+
+                        case "list":
+
+                            
                             break;
 
                         default:

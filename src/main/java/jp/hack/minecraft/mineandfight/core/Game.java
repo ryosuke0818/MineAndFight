@@ -81,6 +81,10 @@ public abstract class Game implements Runnable {
         return  playerScoreSum + teamScore;
     }
 
+    public void setStage(){
+        
+    }
+
     public void onLogin(PlayerJoinEvent event){
         LOGGER.info(String.format("onLogin: %s", event.getPlayer().getName()));
     }
