@@ -55,7 +55,7 @@ public class Configuration extends YamlConfiguration {
         }
         if (!configFile.getParentFile().exists()) {
             if (!configFile.getParentFile().mkdirs()) {
-                LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
+                LOGGER.log(Level.SEVERE, tl("error.config.failedToCreateConfig", configFile.toString()));
             }
         }
         // This will delete files where the first character is 0. In most cases they are broken.
@@ -87,7 +87,7 @@ public class Configuration extends YamlConfiguration {
             } else if (altFileExists()) {
                 convertAltFile();
             } else if (templateName != null) {
-                LOGGER.log(Level.INFO, tl("creatingConfigFromTemplate", configFile.toString()));
+                LOGGER.log(Level.INFO, tl("message.config.creatingConfigFromTemplate", configFile.toString()));
                 createFromTemplate();
             } else {
                 return;
@@ -166,9 +166,9 @@ public class Configuration extends YamlConfiguration {
         InputStream istr = null;
         OutputStream ostr = null;
         try {
-            istr = resourceClass.getResourceAsStream(templateName);
+            istr = resourceClass.getClassLoader().getResourceAsStream(templateName);
             if (istr == null) {
-                LOGGER.log(Level.SEVERE, tl("couldNotFindTemplate", templateName));
+                LOGGER.log(Level.SEVERE, tl("error.config.couldNotFindTemplate", templateName));
                 return;
             }
             ostr = new FileOutputStream(configFile);
@@ -180,7 +180,7 @@ public class Configuration extends YamlConfiguration {
                 length = istr.read(buffer);
             }
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, tl("failedToWriteConfig", configFile.toString()), ex);
+            LOGGER.log(Level.SEVERE, tl("error.config.failedToWriteConfig", configFile.toString()), ex);
         } finally {
             try {
                 if (istr != null) {
@@ -194,7 +194,7 @@ public class Configuration extends YamlConfiguration {
                     ostr.close();
                 }
             } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, tl("failedToCloseConfig", configFile.toString()), ex);
+                LOGGER.log(Level.SEVERE, tl("error.config.failedToCloseConfig", configFile.toString()), ex);
             }
         }
     }
@@ -301,13 +301,13 @@ public class Configuration extends YamlConfiguration {
 
                     if (!configFile.exists()) {
                         try {
-                            LOGGER.log(Level.INFO, tl("creatingEmptyConfig", configFile.toString()));
+                            LOGGER.log(Level.INFO, tl("message.config.creatingEmptyConfig", configFile.toString()));
                             if (!configFile.createNewFile()) {
-                                LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()));
+                                LOGGER.log(Level.SEVERE, tl("error.config.failedToCreateConfig", configFile.toString()));
                                 return;
                             }
                         } catch (IOException ex) {
-                            LOGGER.log(Level.SEVERE, tl("failedToCreateConfig", configFile.toString()), ex);
+                            LOGGER.log(Level.SEVERE, tl("error.config.failedToCreateConfig", configFile.toString()), ex);
                             return;
                         }
                     }
