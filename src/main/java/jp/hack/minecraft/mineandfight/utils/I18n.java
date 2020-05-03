@@ -45,7 +45,7 @@ public class I18n {
         this.currentLocale = this.defaultLocale;
         this.messageFormatCache = new HashMap();
         this.plugin = plugin;
-        this.defaultBundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+        this.defaultBundle = ResourceBundle.getBundle(MESSAGES, Locale.JAPANESE);
         this.localeBundle = this.defaultBundle;
         this.customBundle = NULL_BUNDLE;
     }

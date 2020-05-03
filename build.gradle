@@ -16,11 +16,16 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven {
+        name = 'sk89q'
+        url = 'https://maven.enginehub.org/repo/'
+    }
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT'
+    compile 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -30,4 +35,5 @@ processResources {
         filter ReplaceTokens, tokens: [version: version]
     }
 }
+
 tasks.withType(AbstractCompile)*.options*.encoding = tasks.withType(GroovyCompile)*.groovyOptions*.encoding = 'UTF-8'

@@ -21,7 +21,3 @@ git push
 
 ### サーバーから新しい変更を取得する
 git pull
-
-### リモートデバッグ用　start.shの書き方
-#!/bin/bash
-java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar spigot-1.15.2.jar nogui
