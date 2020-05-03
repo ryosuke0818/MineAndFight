@@ -166,7 +166,7 @@ public class Configuration extends YamlConfiguration {
         InputStream istr = null;
         OutputStream ostr = null;
         try {
-            istr = resourceClass.getResourceAsStream(templateName);
+            istr = resourceClass.getClassLoader().getResourceAsStream(templateName);
             if (istr == null) {
                 LOGGER.log(Level.SEVERE, tl("error.config.couldNotFindTemplate", templateName));
                 return;
