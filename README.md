@@ -1,8 +1,10 @@
 # MineAndFight
 
+## 仕様書
+https://docs.google.com/document/d/1k9AFzz_yGdh6E_ftQxzTxaYiJUqHLmqTHZVmfZhI3VI
+
 ## ブレストドキュメント
 https://docs.google.com/document/d/1d3uQ8OxaxYZDeLQ6yz--hRBu01LgBc8lJ2UauCsBGKI/edit#
-
 
 ## プロジェクトのクローン
 git clone https://github.com/yokmama/MineAndFight.git
