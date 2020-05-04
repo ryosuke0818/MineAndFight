@@ -6,10 +6,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -106,13 +103,16 @@ public abstract class Game implements Runnable {
             long currentTime = startTime;
             while (!isFinish) {
                 final long dt = currentTime - startTime;
-                if(onTask(dt) != true ) break;
+                boolean ret = Threading.postToServerThread(plugin, ()->onTask(dt)).get();
+                if(ret != true) break;
                 Thread.sleep(1000);
                 currentTime = System.currentTimeMillis();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } finally {
             isFinish = true;
             Threading.ensureServerThread(getPlugin(), ()->onEnd());
             GameManager.getInstance().remove(getId());
