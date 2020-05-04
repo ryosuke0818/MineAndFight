@@ -3,7 +3,6 @@ package jp.hack.minecraft.mineandfight.core;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,15 +12,15 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public abstract class Game implements Runnable {
-    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
-    private final JavaPlugin plugin;
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
+    private final GamePlugin plugin;
     private String id;
     private Map<Integer, Team> teams = new ConcurrentHashMap<>();
     private Map<UUID, Player> players = new ConcurrentHashMap<>();
     private Future future;
     private transient boolean isFinish = false;
 
-    public Game(JavaPlugin plugin, String id){
+    public Game(GamePlugin plugin, String id){
         this.plugin = plugin;
         this.id = id;
     }
@@ -46,7 +45,7 @@ public abstract class Game implements Runnable {
         return Objects.hash(id);
     }
 
-    public JavaPlugin getPlugin() {
+    public GamePlugin getPlugin() {
         return plugin;
     }
 
@@ -79,10 +78,6 @@ public abstract class Game implements Runnable {
         int playerScoreSum =  players.values().stream().filter(p->p.getTeamId() == teamId).mapToInt(p->p.getScore()).sum();
         int teamScore = getTeam(teamId).getScore();
         return  playerScoreSum + teamScore;
-    }
-
-    public void setStage(){
-        
     }
 
     public void onLogin(PlayerJoinEvent event){

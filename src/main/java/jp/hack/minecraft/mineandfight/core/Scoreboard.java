@@ -21,11 +21,7 @@ public class Scoreboard {
 
     public Scoreboard(UUID uuid) {
         player = Bukkit.getPlayer(uuid);
-        playerObjective = scoreboard.getObjective(player.getName());
-
-        if (playerObjective == null) {
-            createObjective();
-        }
+        playerObjective = scoreboard.registerNewObjective(player.getName(), "dummy", displayName);
 
         score = playerObjective.getScore("YourScore:");
         teamScore = playerObjective.getScore("TeamScore:");
@@ -37,14 +33,6 @@ public class Scoreboard {
 
     public void setScore(int score) {
         this.score.setScore(score);
-    }
-
-    public void createObjective(){
-        playerObjective = scoreboard.registerNewObjective(player.getName(), "dummy", displayName);
-    }
-
-    public void removeScoreboard() {
-        playerObjective.unregister();
     }
 
     public void setScoreboard(){

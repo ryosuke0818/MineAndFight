@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 import static jp.hack.minecraft.mineandfight.utils.I18n.tl;
 
 public class Configuration extends YamlConfiguration {
-    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
     protected final File configFile;
     protected String templateName = null;
     private Class<?> resourceClass = Configuration.class;
