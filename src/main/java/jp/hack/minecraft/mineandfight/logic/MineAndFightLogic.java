@@ -1,24 +1,20 @@
 package jp.hack.minecraft.mineandfight.logic;
 
-import jp.hack.minecraft.mineandfight.core.Game;
-import jp.hack.minecraft.mineandfight.core.Player;
-import jp.hack.minecraft.mineandfight.core.Scoreboard;
-import jp.hack.minecraft.mineandfight.core.Team;
+import jp.hack.minecraft.mineandfight.core.*;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class MineAndFight extends Game implements Listener {
-    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
+public class MineAndFightLogic extends Game implements Listener {
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
 
     private long gametime = 5 * 1000 * 60;
 
-    public MineAndFight(JavaPlugin plugin, String id) {
+    public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
     }
 
@@ -53,7 +49,7 @@ public class MineAndFight extends Game implements Listener {
             for (int i = 0; i < teamMate.size(); i++) {
                 Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
                 playerScoreboard.setScore(teamMate.get(i).getScore());
-                playerScoreboard.setTeamScore(killerTeam.getScore());
+                //playerScoreboard.setTeamScore(killerTeam.getScore());
                 playerScoreboard.setScoreboard();
             }
         }

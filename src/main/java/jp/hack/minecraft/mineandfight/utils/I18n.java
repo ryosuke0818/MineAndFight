@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class I18n {
-    protected static final Logger LOGGER = Logger.getLogger("MineAndFight");
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
     private static I18n instance;
     private static final String MESSAGES = "messages";
     private final transient Locale defaultLocale = Locale.getDefault();
