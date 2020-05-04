@@ -28,15 +28,6 @@ public class GameConfiguration extends Configuration{
         return configuration;
     }
 
-    public void setOrigin(Location loc){
-        set("origin", loc);
-    }
-
-    public Location getOrigin(){
-        return (Location) get("origin");
-    }
-
-
     public void setPos1(Vector v){
         set("pos1",
                 new Vector(v.getX(), v.getY(), v.getZ()));
