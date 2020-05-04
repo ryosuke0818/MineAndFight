@@ -1,7 +1,7 @@
 package jp.hack.minecraft.mineandfight;
 
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
-import jp.hack.minecraft.mineandfight.logic.MineAndFightCommand;
+import jp.hack.minecraft.mineandfight.command.MineAndFightCommand;
 
 public final class Main extends GamePlugin {
 

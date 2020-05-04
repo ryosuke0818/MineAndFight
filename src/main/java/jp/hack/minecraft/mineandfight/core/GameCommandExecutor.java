@@ -1,15 +1,12 @@
-package jp.hack.minecraft.mineandfight.command;
+package jp.hack.minecraft.mineandfight.core;
 
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
-import jp.hack.minecraft.mineandfight.utils.I18n;
+import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 import java.util.logging.Logger;
 

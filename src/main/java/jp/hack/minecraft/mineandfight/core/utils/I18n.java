@@ -1,4 +1,4 @@
-package jp.hack.minecraft.mineandfight.utils;
+package jp.hack.minecraft.mineandfight.core.utils;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

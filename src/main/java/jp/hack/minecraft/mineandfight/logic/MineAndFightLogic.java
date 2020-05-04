@@ -1,6 +1,10 @@
 package jp.hack.minecraft.mineandfight.logic;
 
 import jp.hack.minecraft.mineandfight.core.*;
+import jp.hack.minecraft.mineandfight.core.utils.Threading;
+import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
+import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -10,12 +14,13 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class MineAndFightLogic extends Game implements Listener {
-    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
+    GameConfiguration configuration;
 
-    private long gametime = 5 * 1000 * 60;
+    private long gametime = 1 * 1000 * 60;
 
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
+        this.configuration = GameConfiguration.create(plugin, id);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -60,6 +65,10 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onStart() {
         //TODO ゲームが開始されたら呼ばれます。
 
+        WorldEditorUtil.loadStage(configuration);
+
+        Bukkit.broadcastMessage("game start");
+
     }
 
     @Override
@@ -72,6 +81,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onEnd() {
         //TODO ゲームが終了したら呼ばれます。
 
+        Bukkit.broadcastMessage("game stop");
     }
 
     @Override

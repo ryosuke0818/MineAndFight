@@ -1,4 +1,4 @@
-package jp.hack.minecraft.mineandfight.logic;
+package jp.hack.minecraft.mineandfight.core.utils;
 
 import com.google.common.collect.Lists;
 import com.sk89q.worldedit.*;
@@ -12,81 +12,29 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
-import com.sk89q.worldedit.world.World;
-import jp.hack.minecraft.mineandfight.command.GameCommandExecutor;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
-import jp.hack.minecraft.mineandfight.utils.I18n;
+import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
 import org.bukkit.Location;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class MineAndFightCommand extends GameCommandExecutor {
-    private List<String> commands = new ArrayList(Arrays.asList("create", "start"));
+public class WorldEditorUtil {
+    protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
 
-    public MineAndFightCommand(GamePlugin plugin) {
-        super(plugin);
-    }
-
-    @Override
-    protected String getPermission() {
-        return "mineandfight.host";
-    }
-
-    @Override
-    protected List<String> getSubCommands() {
-        return commands;
-    }
-
-    @Override
-    public boolean onSubCommand(CommandSender sender, Command command, String subCommand, String[] args) {
-
-        org.bukkit.entity.Player player = (org.bukkit.entity.Player)sender;
-
-        if(subCommand.equals("create")) {
-            if(args.length < 1){
-                sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
-                return false;
-            }
-            String gameId = args[0];
-
-            return saveStatg(player, gameId);
-        }
-        else if(subCommand.equals("start")) {
-            if(args.length < 1){
-                sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
-                return false;
-            }
-            String gameId = args[0];
-
-            com.sk89q.worldedit.bukkit.BukkitPlayer wePlayer = BukkitAdapter.adapt(player);
-
-            boolean ret = loadStage(wePlayer.getWorld(), gameId);
-            if(ret){
-                //TODO マップ読込後の処理
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
-    private boolean saveStatg(org.bukkit.entity.Player player, String gameId){
+    public static boolean saveStage(org.bukkit.entity.Player player, GameConfiguration configuration){
         com.sk89q.worldedit.bukkit.BukkitPlayer wePlayer = BukkitAdapter.adapt(player);
         LocalSession session = WorldEdit.getInstance().getSessionManager().get(wePlayer);
         try {
             Region region = session.getRegionSelector(wePlayer.getWorld()).getRegion();
 
-            GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
             configuration.setPos1(new Vector(region.getMinimumPoint().getX(), region.getMinimumPoint().getY(), region.getMinimumPoint().getZ()));
             configuration.setPos2(new Vector(region.getMaximumPoint().getX(), region.getMaximumPoint().getY(), region.getMaximumPoint().getZ()));
-            configuration.setSchem(gameId + ".schem");
+            configuration.setOrigin(player.getLocation());
+            configuration.setSchem("stage.schem");
             configuration.save();
 
             BlockVector3 vec = session.getPlacementPosition(wePlayer);
@@ -129,9 +77,9 @@ public class MineAndFightCommand extends GameCommandExecutor {
         return false;
     }
 
-    private boolean loadStage(World world, String gameId){
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
-        LOGGER.info("stage file:"+configuration.getSchem());
+    public static boolean loadStage(GameConfiguration configuration){
+        Location location = configuration.getOrigin();
+        com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(location.getWorld());
 
         Clipboard clipboard;
         File file = new File(configuration.getFile().getParent(), configuration.getSchem());
@@ -150,7 +98,7 @@ public class MineAndFightCommand extends GameCommandExecutor {
         }
 
         try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory()
-                .getEditSession(world, -1)){
+                .getEditSession(weWorld, -1)){
             Operation operation = new ClipboardHolder(clipboard)
                     .createPaste(editSession)
                     .to(clipboard.getOrigin())
@@ -172,5 +120,4 @@ public class MineAndFightCommand extends GameCommandExecutor {
 
         return false;
     }
-
 }

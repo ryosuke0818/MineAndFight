@@ -1,5 +1,6 @@
 package jp.hack.minecraft.mineandfight.core;
 
+import jp.hack.minecraft.mineandfight.core.utils.Threading;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -7,9 +8,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static jp.hack.minecraft.mineandfight.core.utils.Threading.postToServerThread;
 
 public abstract class Game implements Runnable {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
@@ -96,11 +100,13 @@ public abstract class Game implements Runnable {
     public void run() {
         isFinish = false;
         try {
-            onStart();
+            Threading.ensureServerThread(getPlugin(), ()->onStart());
+
             long startTime = System.currentTimeMillis();
             long currentTime = startTime;
             while (!isFinish) {
-                if(onTask(currentTime - startTime) != true ) break;
+                final long dt = currentTime - startTime;
+                if(onTask(dt) != true ) break;
                 Thread.sleep(1000);
                 currentTime = System.currentTimeMillis();
             }
@@ -108,7 +114,7 @@ public abstract class Game implements Runnable {
             e.printStackTrace();
         }finally {
             isFinish = true;
-            onEnd();
+            Threading.ensureServerThread(getPlugin(), ()->onEnd());
             GameManager.getInstance().remove(getId());
         }
     }

@@ -1,4 +1,4 @@
-package jp.hack.minecraft.mineandfight.utils;
+package jp.hack.minecraft.mineandfight.core.utils;
 
 import com.google.common.io.Files;
 import org.bukkit.*;
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static jp.hack.minecraft.mineandfight.utils.I18n.tl;
+import static jp.hack.minecraft.mineandfight.core.utils.I18n.tl;
 
 public class Configuration extends YamlConfiguration {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");

@@ -1,7 +1,7 @@
 package jp.hack.minecraft.mineandfight.core;
 
-import jp.hack.minecraft.mineandfight.utils.Configuration;
-import jp.hack.minecraft.mineandfight.utils.I18n;
+import jp.hack.minecraft.mineandfight.core.utils.Configuration;
+import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
