@@ -4,6 +4,7 @@ main: jp.hack.minecraft.mineandfight.Main
 api-version: 1.13
 depend:
   - WorldEdit
+  - Vault
 commands:
   mineandfight:
     description: host command
