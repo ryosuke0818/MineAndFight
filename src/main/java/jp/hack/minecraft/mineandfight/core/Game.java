@@ -46,6 +46,10 @@ public abstract class Game implements Runnable {
         }
     }
 
+    /*void delete() {
+        configuration
+    }*/
+
     @Override
     public int hashCode() {
         return Objects.hash(id);
@@ -57,6 +61,10 @@ public abstract class Game implements Runnable {
 
     public Collection<Player> getJoinPlayers(){
         return players.values();
+    }
+
+    public void addPlayer(Player player){
+        players.put(player.getUuid(), player);
     }
 
     public Collection<Player> getTeamPlayers(int teamId){
