@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
+import java.util.List;
 
 public class GameConfiguration extends Configuration{
 
@@ -21,6 +22,8 @@ public class GameConfiguration extends Configuration{
 
         GameConfiguration configuration = new GameConfiguration(new File(gameFolder, "config.yml"));
         configuration.load();
+
+        plugin.getConfiguration().addGame(gameId);
 
         return configuration;
     }
