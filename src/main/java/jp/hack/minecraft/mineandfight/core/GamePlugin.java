@@ -2,6 +2,7 @@ package jp.hack.minecraft.mineandfight.core;
 
 import jp.hack.minecraft.mineandfight.core.utils.Configuration;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
+import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 
 public abstract class GamePlugin extends JavaPlugin {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
-    private transient Configuration configuration;
+    private transient MainConfiguration configuration;
     private transient I18n i18n;
     private static Economy econ = null;
 
@@ -27,8 +28,7 @@ public abstract class GamePlugin extends JavaPlugin {
         this.i18n.onEnable();
         this.i18n.updateLocale("ja");
 
-        this.configuration = new Configuration(new File(getDataFolder(), "config.yml"));
-        this.configuration.setTemplateName("config.yml");
+        this.configuration = new MainConfiguration(new File(getDataFolder(), "config.yml"));
         this.configuration.load();
 
         if (!setupEconomy() ) {
@@ -66,7 +66,7 @@ public abstract class GamePlugin extends JavaPlugin {
         return econ != null;
     }
 
-    public Configuration getConfiguration() {
+    public MainConfiguration getConfiguration() {
         return configuration;
     }
 }
