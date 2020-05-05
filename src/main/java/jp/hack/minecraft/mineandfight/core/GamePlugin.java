@@ -33,8 +33,8 @@ public abstract class GamePlugin extends JavaPlugin {
 
         if (!setupEconomy() ) {
             LOGGER.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+            //getServer().getPluginManager().disablePlugin(this);
+            //return;
         }
     }
 

@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameConfiguration extends Configuration{
@@ -63,5 +64,17 @@ public class GameConfiguration extends Configuration{
 
     public Location getOrigin(){
         return (Location)get("origin");
+    }
+
+    public void setRespawns(List<Vector> respawns) {
+        set("respawns", respawns);
+    }
+
+    public List<Vector> getRespawns(){
+        Object o =  get("respawns");
+        if(o instanceof List){
+            return (List<Vector>)o;
+        }
+        return new ArrayList<>();
     }
 }

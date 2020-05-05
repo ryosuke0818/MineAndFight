@@ -6,15 +6,19 @@ import jp.hack.minecraft.mineandfight.logic.MineAndFightLogic;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MineAndFightCommand extends GameCommandExecutor {
-    private List<String> commands = new ArrayList(Arrays.asList("create", "start"));
+    private List<String> commands = new ArrayList(Arrays.asList("create", "start", "delete", "list", "player"));
 
     public MineAndFightCommand(GamePlugin plugin) {
         super(plugin);
@@ -42,7 +46,29 @@ public class MineAndFightCommand extends GameCommandExecutor {
             String gameId = args[0];
             GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
 
-            return WorldEditorUtil.saveStage((org.bukkit.entity.Player) sender, configuration);
+            boolean ret =  WorldEditorUtil.saveStage((org.bukkit.entity.Player) sender, configuration);
+            if(ret){
+                BoundingBox box = BoundingBox.of(configuration.getPos1(), configuration.getPos2());
+                box = box.expand(-1, -1, -1);
+                Vector max = box.getMax();
+                Vector min = box.getMin();
+                double y = min.getY() + (max.getY()-min.getY())/2;
+                Vector p1 = new Vector(max.getX(), y, max.getZ());
+                Vector p2 = new Vector(max.getX(), y, min.getZ());
+                Vector p3 = new Vector(min.getX(), y, max.getZ());
+                Vector p4 = new Vector(min.getX(), y, min.getZ());
+                List<Vector> respawns = Arrays.asList(p1, p2, p3, p4);
+                configuration.setRespawns(respawns);
+                configuration.save();
+
+                //指定された位置のブロックを空気に置き換える(サンプル）
+                /*respawns.forEach(v -> {
+                    Location loc = new Location(((org.bukkit.entity.Player) sender).getWorld(), v.getX(), v.getY(), v.getZ());
+                    loc.getBlock().setType(Material.AIR);
+                });*/
+
+                return true;
+            }
         }
 
         else if(subCommand.equals("start")) {
