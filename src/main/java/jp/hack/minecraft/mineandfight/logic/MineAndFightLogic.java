@@ -14,13 +14,11 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class MineAndFightLogic extends Game implements Listener {
-    GameConfiguration configuration;
 
     private long gametime = 1 * 1000 * 60;
 
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
-        this.configuration = GameConfiguration.create(plugin, id);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -53,7 +51,8 @@ public class MineAndFightLogic extends Game implements Listener {
             ArrayList<Player> teamMate = (ArrayList<Player>) getTeamPlayers(killerTeam.getTeamId());
             for (int i = 0; i < teamMate.size(); i++) {
                 Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
-                playerScoreboard.setTeamScore(killerTeam.getScore());
+                playerScoreboard.setScore(teamMate.get(i).getScore());
+                //playerScoreboard.setTeamScore(killerTeam.getScore());
                 playerScoreboard.setScoreboard();
             }
         }

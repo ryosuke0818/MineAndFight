@@ -1,16 +1,18 @@
 package jp.hack.minecraft.mineandfight.core;
 
 import jp.hack.minecraft.mineandfight.core.utils.Threading;
+import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.util.BoundingBox;
 
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static jp.hack.minecraft.mineandfight.core.utils.Threading.postToServerThread;
 
 public abstract class Game implements Runnable {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
@@ -20,10 +22,13 @@ public abstract class Game implements Runnable {
     private Map<UUID, Player> players = new ConcurrentHashMap<>();
     private Future future;
     private transient boolean isFinish = false;
+    protected GameConfiguration configuration;
+    private transient BoundingBox gameArea;
 
     public Game(GamePlugin plugin, String id){
         this.plugin = plugin;
         this.id = id;
+        this.configuration = GameConfiguration.create(plugin, id);
     }
 
     public String getId(){
@@ -119,6 +124,12 @@ public abstract class Game implements Runnable {
         }
     }
 
+    public synchronized BoundingBox getGameArea(){
+        if(gameArea == null) {
+            gameArea = BoundingBox.of(configuration.getPos1(), configuration.getPos2());
+        }
+        return gameArea;
+    }
 
     abstract public void onStart();
     abstract public void onStop();
