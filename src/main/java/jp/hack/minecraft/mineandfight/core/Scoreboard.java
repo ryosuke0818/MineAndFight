@@ -21,7 +21,8 @@ public class Scoreboard {
 
     public Scoreboard(UUID uuid) {
         player = Bukkit.getPlayer(uuid);
-        playerObjective = scoreboard.registerNewObjective(player.getName(), "dummy", displayName);
+
+        playerObjective = scoreboard.registerNewObjective("", "dummy", displayName);
 
         score = playerObjective.getScore("YourScore:");
         teamScore = playerObjective.getScore("TeamScore:");
