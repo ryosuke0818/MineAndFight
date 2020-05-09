@@ -11,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
-import scala.Int;
 
 import java.util.*;
 import java.util.function.Consumer;

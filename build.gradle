@@ -22,7 +22,7 @@ repositories {
     }
     maven {
         name = 'jitpack'
-        url = ' http://nexus.hc.to/content/repositories/pub_releases/'
+        url = 'http://nexus.hc.to/content/repositories/pub_releases/'
     }
 
 }
