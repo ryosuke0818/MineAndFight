@@ -8,8 +8,9 @@ public class GameSubCommand extends GameCommandExecutor {
     public GameSubCommand(GamePlugin plugin) {
         super(plugin);
 
-        addSubCommand(new StartCommand());
+        addSubCommand(new StartCommand(plugin));
         addSubCommand(new CreateCommand(plugin));
+        addSubCommand(new ListCommand(plugin));
     }
 
     @Override

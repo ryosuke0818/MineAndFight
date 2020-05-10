@@ -11,6 +11,7 @@ import java.util.List;
 public class PlayerSubCommand extends GameCommandExecutor {
     public PlayerSubCommand(GamePlugin plugin) {
         super(plugin);
+        addSubCommand(new AddCommand(plugin));
     }
 
     @Override
