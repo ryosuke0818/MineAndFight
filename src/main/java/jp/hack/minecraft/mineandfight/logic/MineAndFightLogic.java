@@ -33,7 +33,7 @@ public class MineAndFightLogic extends Game implements Listener {
 
         Player breaker = findPlayer(event.getPlayer().getUniqueId());
 
-        final String oreName = Material.EMERALD_ORE.getData().getName();
+        final String oreName = Material.EMERALD_ORE.data.getName();
         String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
 
         if(blockName.equals(oreName)){
