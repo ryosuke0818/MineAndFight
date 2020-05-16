@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 
 public class MineAndFightLogic extends Game implements Listener {
 
+
     private long gametime = 1 * 1000 * 60;
     private final double MIN_EMERALDPERCENTAGE = 2;
     private final double MAX_EMERALDPERCENTAGE = 4;
@@ -57,7 +58,7 @@ public class MineAndFightLogic extends Game implements Listener {
 
             ArrayList<Player> teamMate = (ArrayList<Player>) getTeamPlayers(killerTeam.getTeamId());
             for (int i = 0; i < teamMate.size(); i++) {
-                Scoreboard playerScoreboard = new Scoreboard(teamMate.get(i).getUuid());
+                Scoreboard playerScoreboard = new Scoreboard();
                 playerScoreboard.setScore(teamMate.get(i).getScore());
                 //playerScoreboard.setTeamScore(killerTeam.getScore());
                 playerScoreboard.setScoreboard();
