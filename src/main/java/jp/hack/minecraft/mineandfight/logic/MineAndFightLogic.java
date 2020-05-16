@@ -130,6 +130,14 @@ public class MineAndFightLogic extends Game implements Listener {
                                     });
                         });
 
+        //TITLE
+        getJoinPlayers().stream().forEach(p->{
+            Bukkit.getPlayer(p.getUuid()).sendTitle("gamestart", "", 0, 0, 0);
+        });
+
+        //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
+
+
         Bukkit.broadcastMessage("game start");
 
     }
