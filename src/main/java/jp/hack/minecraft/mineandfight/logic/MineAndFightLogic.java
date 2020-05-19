@@ -60,7 +60,7 @@ public class MineAndFightLogic extends Game implements Listener {
 
             ArrayList<Player> teamMate = (ArrayList<Player>) getTeamPlayers(killerTeam.getTeamId());
             for (int i = 0; i < teamMate.size(); i++) {
-                playerScoreboard = new Scoreboard(gameId);
+                playerScoreboard = new Scoreboard(gameId, killerTeam.getTeamId());
                 playerScoreboard.setScore(teamMate.get(i).getScore());
                 //playerScoreboard.setTeamScore(killerTeam.getScore());
                 //playerScoreboard.setScoreboard();

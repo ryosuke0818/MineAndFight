@@ -1,36 +1,41 @@
 package jp.hack.minecraft.mineandfight.core;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.ScoreboardManager;
-
 
 public class Scoreboard {
-    private final String displayName = ChatColor.GREEN +"TeamScore";
-    private final ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private org.bukkit.scoreboard.Scoreboard scoreboard = manager.getNewScoreboard();
-    private Objective objective;
-    private Score score;
+    private final ScoreboardBukkit scoreboardBukkit;
+    private final String gameId;
+    private final int teamId;
+    private int score = 0;
 
-    public Scoreboard(String gameId) {
+    public Scoreboard(String gameId, int teamId) {
+        this.gameId = gameId;
+        this.teamId = teamId;
+        scoreboardBukkit = new ScoreboardBukkit(gameId);
+    }
 
-        objective = scoreboard.getObjective(gameId);
+    public String getGameId() {
+        return gameId;
+    }
 
-        score = objective.getScore("TeamScore:");
+    public int getTeamId() {
+        return teamId;
     }
 
     public void setScore(int score) {
-        this.score.setScore(score);
+        this.score = score;
+        scoreboardBukkit.setScore("Team Score:", this.score);
     }
 
-    public void setScoreboard(Player player){
-        player.setScoreboard(scoreboard);
+    public int getScore() {
+        return score;
+    }
+
+    public void setScoreboard(Player player) {
+        scoreboardBukkit.setScoreboard(player);
     }
 
     public void resetScoreboard(Player player) {
-        player.getScoreboard().resetScores("TeamScore:");
+        scoreboardBukkit.resetScoreboard(player);
     }
 }
