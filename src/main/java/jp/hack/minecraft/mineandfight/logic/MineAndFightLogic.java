@@ -28,6 +28,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
+        scoreboard = new Scoreboard(id);
         game = gameManager.getGame(id);
     }
 
