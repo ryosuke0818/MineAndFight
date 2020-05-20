@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
-    private Scoreboard playerScoreboard;
+    private Scoreboard scoreboard;
     private long gametime = 1 * 1000 * 60;
     private final double MIN_EMERALDPERCENTAGE = 2;
     private final double MAX_EMERALDPERCENTAGE = 4;
@@ -29,6 +29,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
+        scoreboard = new Scoreboard(gameId);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -51,20 +52,12 @@ public class MineAndFightLogic extends Game implements Listener {
             Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
             LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
-            Team killerTeam = new Team(killer.getTeamId());
-
             killer.setScore(killer.getScore() + killed.getBounty());
             killer.setBounty(killer.getBounty() + 1);
-            killerTeam.setScore(killerTeam.getScore() + killed.getBounty());
+
             killed.setBounty(0);
 
-            ArrayList<Player> teamMate = (ArrayList<Player>) getTeamPlayers(killerTeam.getTeamId());
-            for (int i = 0; i < teamMate.size(); i++) {
-                playerScoreboard = new Scoreboard(gameId, killerTeam.getTeamId());
-                playerScoreboard.setScore(teamMate.get(i).getScore());
-                //playerScoreboard.setTeamScore(killerTeam.getScore());
-                //playerScoreboard.setScoreboard();
-            }
+            scoreboard.setScore(killer.getName(), killer.getScore());
         }
     }
 

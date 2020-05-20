@@ -6,13 +6,23 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
+import java.util.Optional;
+
 public class ScoreboardBukkit {
     private final ScoreboardManager manager = Bukkit.getScoreboardManager();
     private final Scoreboard scoreboard = manager.getNewScoreboard();
     private Objective objective;
 
     ScoreboardBukkit(String gameId) {
-        objective = scoreboard.getObjective(gameId);
+        Boolean isThereAObjective = scoreboard.getObjectives().stream()
+                .filter(objective -> gameId.equals(objective.getName()))
+                .findAny()
+                .isPresent();
+        if (isThereAObjective) {
+            objective = scoreboard.getObjective(gameId);
+        } else {
+            objective = scoreboard.registerNewObjective(gameId, "dummy", "Score");
+        }
     }
 
     public void setScore(String entry, int score) {

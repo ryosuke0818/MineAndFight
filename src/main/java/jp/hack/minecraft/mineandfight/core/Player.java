@@ -1,19 +1,27 @@
 package jp.hack.minecraft.mineandfight.core;
 
+import org.bukkit.Bukkit;
+
 import java.util.UUID;
 
 public class Player {
     private final UUID uuid;
+    private String name;
     private int teamId;
     private int score;
     private int bounty;
 
     public Player(UUID uuid){
         this.uuid = uuid;
+        name = Bukkit.getPlayer(uuid).getName();
     }
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getTeamId() {
