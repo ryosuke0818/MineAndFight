@@ -2,10 +2,7 @@ package jp.hack.minecraft.mineandfight.logic;
 
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -19,6 +16,8 @@ import java.util.stream.IntStream;
 public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
+    private GameManager gameManager = GameManager.getInstance();
+    private Game game;
     private Scoreboard scoreboard;
     private long gametime = 1 * 1000 * 60;
     private final double MIN_EMERALDPERCENTAGE = 2;
@@ -29,35 +28,39 @@ public class MineAndFightLogic extends Game implements Listener {
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
-        scoreboard = new Scoreboard(gameId);
+        game = gameManager.getGame(id);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
-        LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
-
         Player breaker = findPlayer(event.getPlayer().getUniqueId());
 
-        final String oreName = Material.EMERALD_ORE.data.getName();
-        String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
+        if(game.getJoinPlayers().contains(breaker)) {
+            LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
-        if(blockName.equals(oreName)){
-            breaker.setScore( breaker.getScore() + ( breaker.getBounty() + 1 ) );
+            final String oreName = Material.EMERALD_ORE.data.getName();
+            String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
+
+            if (blockName.equals(oreName)) {
+                breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
+            }
         }
     }
 
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player killed = findPlayer(event.getEntity().getUniqueId());
 
-        if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
-            Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
-            LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+        if(game.getJoinPlayers().contains(killed)) {
+            if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
+                Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
+                LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
-            killer.setScore(killer.getScore() + killed.getBounty());
-            killer.setBounty(killer.getBounty() + 1);
+                killer.setScore(killer.getScore() + killed.getBounty());
+                killer.setBounty(killer.getBounty() + 1);
 
-            killed.setBounty(0);
+                killed.setBounty(0);
 
-            scoreboard.setScore(killer.getName(), killer.getScore());
+                scoreboard.setScore(killer.getName(), killer.getScore());
+            }
         }
     }
 
@@ -126,9 +129,14 @@ public class MineAndFightLogic extends Game implements Listener {
                                     });
                         });
 
+        scoreboard = new Scoreboard(gameId);
+
         //TITLE
         getJoinPlayers().stream().forEach(p->{
-            Bukkit.getPlayer(p.getUuid()).sendTitle("gamestart", "", 0, 0, 0);
+            org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
+            scoreboard.setScore(p.getName(), 0);
+            scoreboard.setScoreboard(bukkitPlayer);
+            bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         });
 
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
