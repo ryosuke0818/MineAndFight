@@ -151,6 +151,10 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onStop() {
         //TODO ゲームが停止されたら呼ばれます。
 
+        getJoinPlayers().stream().forEach(p->{
+            org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
+            scoreboard.resetScoreboard(bukkitPlayer);
+        });
     }
 
     @Override
