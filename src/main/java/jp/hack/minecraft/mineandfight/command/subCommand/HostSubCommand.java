@@ -2,16 +2,13 @@ package jp.hack.minecraft.mineandfight.command.subCommand;
 
 import jp.hack.minecraft.mineandfight.core.GameCommandExecutor;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
-import jp.hack.minecraft.mineandfight.core.SubCommand;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-
-import java.util.List;
-
-public class PlayerSubCommand extends GameCommandExecutor {
-    public PlayerSubCommand(GamePlugin plugin) {
+public class HostSubCommand extends GameCommandExecutor {
+    public HostSubCommand(GamePlugin plugin) {
         super(plugin);
-        addSubCommand(new AddCommand(plugin));
+        addSubCommand(new GameStartCommand(plugin));
+        addSubCommand(new GameCreateCommand(plugin));
+        addSubCommand(new GameDeleteCommand(plugin));
+        addSubCommand(new GameListCommand(plugin));
     }
 
     @Override
@@ -23,4 +20,5 @@ public class PlayerSubCommand extends GameCommandExecutor {
     public String getPermission() {
         return null;
     }
+
 }

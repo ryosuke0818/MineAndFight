@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CreateCommand implements SubCommand {
+public class GameCreateCommand implements SubCommand {
     GamePlugin plugin;
 
-    public CreateCommand(GamePlugin plugin) {
+    public GameCreateCommand(GamePlugin plugin) {
         this.plugin = plugin;
     }
 

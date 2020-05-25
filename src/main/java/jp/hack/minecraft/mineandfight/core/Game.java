@@ -67,6 +67,10 @@ public abstract class Game implements Runnable {
         players.put(player.getUuid(), player);
     }
 
+    public void removePlayer(UUID uuid) {
+        players.remove(uuid);
+    }
+
     public Collection<Player> getTeamPlayers(int teamId){
         return players.values().stream()
                 .filter(player -> player.getTeamId() == teamId).collect(Collectors.toList());

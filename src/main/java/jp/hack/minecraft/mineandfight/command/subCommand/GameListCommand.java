@@ -10,10 +10,10 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCommand implements SubCommand {
+public class GameListCommand implements SubCommand {
     GamePlugin plugin;
 
-    public ListCommand(GamePlugin plugin){
+    public GameListCommand(GamePlugin plugin){
         this.plugin = plugin;
     }
 

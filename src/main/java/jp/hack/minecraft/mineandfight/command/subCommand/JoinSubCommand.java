@@ -9,20 +9,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AddCommand implements SubCommand {
+public class JoinSubCommand implements SubCommand {
     GamePlugin plugin;
 
-    public AddCommand(GamePlugin plugin){
+    public JoinSubCommand(GamePlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public String getName() {
-        return "add";
+        return "join";
     }
 
     @Override
