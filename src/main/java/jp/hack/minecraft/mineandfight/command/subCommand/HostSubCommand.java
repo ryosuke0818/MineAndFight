@@ -13,7 +13,7 @@ public class HostSubCommand extends GameCommandExecutor {
 
     @Override
     public String getName() {
-        return "player";
+        return "host";
     }
 
     @Override

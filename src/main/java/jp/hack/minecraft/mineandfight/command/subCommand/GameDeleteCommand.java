@@ -4,10 +4,11 @@ import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
-import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class GameDeleteCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "create";
+        return "delete";
     }
 
     @Override
@@ -35,12 +36,11 @@ public class GameDeleteCommand implements SubCommand {
             return false;
         }
         String gameId = args[0];
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
-        GameManager gameManager = GameManager.getInstance();
 
-        if(configuration.isCreated()) {
-            //GameをDeleteする
-        }
+        GameManager gameManager = GameManager.getInstance();
+        MainConfiguration mainConfiguration = new MainConfiguration(new File("resources/config.yml"));
+
+        mainConfiguration.deleteGame(gameId);
 
         return true;
     }

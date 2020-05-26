@@ -22,7 +22,7 @@ public class ListSubCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "join";
+        return "list";
     }
 
     @Override
@@ -42,12 +42,11 @@ public class ListSubCommand implements SubCommand {
         GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
         GameManager gameManager = GameManager.getInstance();
         Game game = gameManager.getGame(gameId);
+        StringBuilder builder = new StringBuilder();
 
         if(configuration.isCreated()) {
-            game.getJoinPlayers().stream()
-                    .forEach(p -> {
-                        player.sendMessage(p.getName());
-                    });
+            game.getJoinPlayers().stream().forEach(p -> builder.append(p).append(" "));
+            player.sendMessage(I18n.tl("message.command.list",builder.toString()));
 
             return true;
         }

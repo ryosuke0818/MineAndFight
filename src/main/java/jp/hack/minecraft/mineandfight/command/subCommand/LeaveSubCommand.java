@@ -22,7 +22,7 @@ public class LeaveSubCommand implements SubCommand {
 
     @Override
     public String getName() {
-        return "join";
+        return "leave";
     }
 
     @Override

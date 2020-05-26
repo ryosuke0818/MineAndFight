@@ -1,5 +1,7 @@
 package jp.hack.minecraft.mineandfight.command.subCommand;
 
+import jp.hack.minecraft.mineandfight.core.Game;
+import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
@@ -39,6 +41,7 @@ public class GameCreateCommand implements SubCommand {
         }
         String gameId = args[0];
         GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
+        GameManager gameManagar = GameManager.getInstance();
 
         boolean ret =  WorldEditorUtil.saveStage((org.bukkit.entity.Player) sender, configuration);
         if(ret){
@@ -54,6 +57,7 @@ public class GameCreateCommand implements SubCommand {
             List<Vector> respawns = Arrays.asList(p1, p2, p3, p4);
             configuration.setRespawns(respawns);
             configuration.save();
+
 
             return true;
         }
