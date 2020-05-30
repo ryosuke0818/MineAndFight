@@ -24,6 +24,7 @@ public class MineAndFightCommand extends GameCommandExecutor {
         addSubCommand(new JoinSubCommand(plugin));
         addSubCommand(new LeaveSubCommand(plugin));
         addSubCommand(new ListSubCommand(plugin));
+        addSubCommand(new TestSubCommand()); // 演出のテスト用コマンド
     }
 
     @Override
