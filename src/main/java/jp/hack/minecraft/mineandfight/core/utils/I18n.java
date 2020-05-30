@@ -23,7 +23,7 @@ public class I18n {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
     private static I18n instance;
     private static final String MESSAGES = "messages";
-    private final transient Locale defaultLocale = Locale.getDefault();
+    private final transient Locale defaultLocale = Locale.JAPAN;//.getDefault();
     private transient Locale currentLocale;
     private transient ResourceBundle customBundle;
     private transient ResourceBundle localeBundle;
