@@ -19,6 +19,7 @@ public class MineAndFightLogic extends Game implements Listener {
     private GameManager gameManager = GameManager.getInstance();
     private Game game;
     private Scoreboard scoreboard;
+    private TimeBar timeBar;
     private long gametime = 1 * 1000 * 60;
     private final double MIN_EMERALDPERCENTAGE = 2;
     private final double MAX_EMERALDPERCENTAGE = 4;
@@ -43,6 +44,8 @@ public class MineAndFightLogic extends Game implements Listener {
 
             if (blockName.equals(oreName)) {
                 breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
+
+                scoreboard.setScore(breaker.getName(), breaker.getScore());
             }
         }
     }
@@ -137,11 +140,14 @@ public class MineAndFightLogic extends Game implements Listener {
             org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
             scoreboard.setScore(p.getName(), 0);
             scoreboard.setScoreboard(bukkitPlayer);
+
+            double minY = Math.min(minVec.getY(), maxVec.getY()) + 1;
+            Location location = new Location(configuration.getOrigin().getWorld(), minVec.getX(), minY, minVec.getZ(), 1, 0);
+            bukkitPlayer.teleport(location);
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         });
 
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
-
 
         Bukkit.broadcastMessage("game start");
 
@@ -167,7 +173,10 @@ public class MineAndFightLogic extends Game implements Listener {
     @Override
     public boolean onTask(long dt) {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
-        if(dt < gametime) return true;
+        if(dt < gametime) {
+            timeBar.setProgress((gametime/dt));
+            return true;
+        }
         return false;
     }
 }
