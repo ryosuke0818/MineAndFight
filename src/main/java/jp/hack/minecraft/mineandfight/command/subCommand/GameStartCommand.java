@@ -1,5 +1,6 @@
 package jp.hack.minecraft.mineandfight.command.subCommand;
 
+import jp.hack.minecraft.mineandfight.Main;
 import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
@@ -39,7 +40,8 @@ public class GameStartCommand implements SubCommand {
         GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
 
         if(configuration.isCreated()) {
-            GameManager.getInstance().start(new MineAndFightLogic(plugin, gameId));
+            Main main = (Main)plugin;
+            GameManager.getInstance().start(main.getMineAndFightManager().getLogic(gameId));
             return true;
         }else{
             sender.sendMessage(I18n.tl("error.command.uncreated.game", gameId));

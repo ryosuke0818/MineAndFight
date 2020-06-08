@@ -25,7 +25,7 @@ public class MineAndFightLogic extends Game implements Listener {
     private final double BALANCE = 2.0;
     private final double ACCELERATE = 0.2;
 
-    public MineAndFightLogic(GamePlugin plugin, String id) {
+    MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
         scoreboard = new Scoreboard(id);
