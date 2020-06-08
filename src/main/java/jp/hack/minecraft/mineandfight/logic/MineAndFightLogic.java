@@ -166,7 +166,7 @@ public class MineAndFightLogic extends Game implements Listener {
 
     @Override
     public boolean onTask(long dt) {
-        //TODO　１秒単位に呼ばれる処理　Flaseを返すとゲームは終了します。DTは経過時間（秒）
+        //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
         if(dt < gametime) return true;
         return false;
     }
