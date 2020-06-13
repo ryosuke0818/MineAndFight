@@ -116,6 +116,13 @@ public class GameManager implements Listener {
         }
     }
 
+    public boolean isCreated(String gameId){
+        return games.containsKey(gameId);
+    }
+
+    public boolean isRunning(String gameId){
+        return runningGames.containsKey(gameId);
+    }
 
     public void start(String gameId){
         Game game = games.get(gameId);
