@@ -37,12 +37,13 @@ public class GameStartCommand implements SubCommand {
             return false;
         }
         String gameId = args[0];
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
-
-        if(configuration.isCreated()) {
-            Main main = (Main)plugin;
-            GameManager.getInstance().start(main.getMineAndFightManager().getLogic(gameId));
-            return true;
+        if(GameManager.getInstance().isCreated(gameId)) {
+            if(!GameManager.getInstance().isRunning(gameId)){
+                GameManager.getInstance().start(gameId);
+                return true;
+            }else{
+                sender.sendMessage(I18n.tl("error.command.started.game", gameId));
+            }
         }else{
             sender.sendMessage(I18n.tl("error.command.uncreated.game", gameId));
         }

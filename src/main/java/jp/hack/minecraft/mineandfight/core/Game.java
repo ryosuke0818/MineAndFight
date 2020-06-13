@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public abstract class Game implements Runnable {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
-    private final GamePlugin plugin;
+    protected final GamePlugin plugin;
     private String id;
     private Map<Integer, Team> teams = new ConcurrentHashMap<>();
     private Map<UUID, Player> players = new ConcurrentHashMap<>();
