@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 public class TimeBar {
     BossBar bossBar;
 
-    TimeBar(Plugin plugin) {
+    public TimeBar(Plugin plugin) {
         bossBar = plugin.getServer().createBossBar("ボスヴァー", BarColor.YELLOW, BarStyle.SOLID);
         bossBar.setVisible(true);
     }

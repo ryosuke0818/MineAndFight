@@ -7,6 +7,7 @@ import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.BoundingBox;
@@ -58,9 +59,10 @@ public class GameCreateCommand implements SubCommand {
             configuration.setRespawns(respawns);
             configuration.save();
 
-
+            sender.sendMessage(ChatColor.GREEN +"Successed!");
             return true;
         }
+        sender.sendMessage(ChatColor.RED+"You must set positions!");
         return false;
     }
 
