@@ -1,5 +1,6 @@
 package jp.hack.minecraft.mineandfight.command.subCommand;
 
+import jp.hack.minecraft.mineandfight.Main;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
@@ -33,7 +34,7 @@ public class JoinSubCommand implements SubCommand {
 
         GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
         GameManager gameManager = GameManager.getInstance();
-        Game game = gameManager.getGame(gameId);
+        Game game = GameManager.getInstance().getGame(gameId);
         org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) sender;
 
         Boolean isThereAPlayer = false;

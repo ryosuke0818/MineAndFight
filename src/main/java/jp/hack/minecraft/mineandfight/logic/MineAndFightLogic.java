@@ -17,7 +17,6 @@ public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
     private GameManager gameManager = GameManager.getInstance();
-    private Game game;
     private Scoreboard scoreboard;
     private TimeBar timeBar;
     private long gametime = 1 * 1000 * 60;
@@ -26,17 +25,16 @@ public class MineAndFightLogic extends Game implements Listener {
     private final double BALANCE = 2.0;
     private final double ACCELERATE = 0.2;
 
-    MineAndFightLogic(GamePlugin plugin, String id) {
+    public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
         scoreboard = new Scoreboard(id);
-        game = gameManager.getGame(id);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
         Player breaker = findPlayer(event.getPlayer().getUniqueId());
 
-        if(game.getJoinPlayers().contains(breaker)) {
+        if(getJoinPlayers().contains(breaker)) {
             LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
             final String oreName = Material.EMERALD_ORE.data.getName();
@@ -53,7 +51,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player killed = findPlayer(event.getEntity().getUniqueId());
 
-        if(game.getJoinPlayers().contains(killed)) {
+        if(getJoinPlayers().contains(killed)) {
             if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
                 Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
                 LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));

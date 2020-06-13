@@ -1,11 +1,11 @@
 package jp.hack.minecraft.mineandfight;
 
+import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.command.MineAndFightCommand;
-import jp.hack.minecraft.mineandfight.logic.MineAndFightManager;
+import jp.hack.minecraft.mineandfight.logic.MineAndFightLogic;
 
 public final class Main extends GamePlugin {
-    MineAndFightManager mineAndFightManager;
 
     @Override
     public void onEnable() {
@@ -13,9 +13,8 @@ public final class Main extends GamePlugin {
 
         getCommand("mineandfight").setExecutor(new MineAndFightCommand(this));
 
-        mineAndFightManager = new MineAndFightManager(this);
+        GameManager.getInstance().setGenerator((plugin, gameID) -> new MineAndFightLogic(plugin, gameID));
+
+        GameManager.getInstance().loadGame(this);
     }
-
-
-    public MineAndFightManager getMineAndFightManager(){ return mineAndFightManager;}
 }

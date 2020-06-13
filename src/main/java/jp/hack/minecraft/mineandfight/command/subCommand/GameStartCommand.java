@@ -40,8 +40,7 @@ public class GameStartCommand implements SubCommand {
         GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
 
         if(configuration.isCreated()) {
-            Main main = (Main)plugin;
-            GameManager.getInstance().start(main.getMineAndFightManager().getLogic(gameId));
+            GameManager.getInstance().start(gameId);
             return true;
         }else{
             sender.sendMessage(I18n.tl("error.command.uncreated.game", gameId));
