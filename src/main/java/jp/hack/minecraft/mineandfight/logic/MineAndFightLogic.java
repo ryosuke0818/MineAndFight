@@ -3,20 +3,20 @@ package jp.hack.minecraft.mineandfight.logic;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
     private GameManager gameManager = GameManager.getInstance();
+    private Game game;
+    public List<String> ranking;
     private Scoreboard scoreboard;
     private TimeBar timeBar;
     private long gametime = 1 * 1000 * 60;
@@ -29,6 +29,8 @@ public class MineAndFightLogic extends Game implements Listener {
         super(plugin, id);
         gameId = id;
         scoreboard = new Scoreboard(id);
+        game = gameManager.getGame(id);
+        timeBar = new TimeBar(plugin);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -165,6 +167,17 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onEnd() {
         //TODO ゲームが終了したら呼ばれます。
 
+        Map<String, Integer> scoreMap = new HashMap<>();
+        List<String> players = new ArrayList<>();
+        List<Integer> scores = new ArrayList<>();
+        getJoinPlayers().stream().forEach(p->{
+            scoreMap.put(p.getName(), p.getScore());
+            players.add(p.getName());
+            scores.add(p.getScore());
+        });
+
+        ranking = sort(players, scores);
+
         Bukkit.broadcastMessage("game stop");
     }
 
@@ -177,4 +190,28 @@ public class MineAndFightLogic extends Game implements Listener {
         }
         return false;
     }
+
+    public List<String> sort( List<String> list1, List<Integer> list2 ) {
+        List<String> strList = list1;
+        List<Integer> intList = list2;
+
+        if (!(strList.size() == intList.size())) {
+            for (int i = 0; i < intList.size() - 1; i++) {
+                for (int j = 0; j < intList.size() - 1; j++) {
+                    if(intList.get(j) < intList.get(j+1)) {
+                        String strContent = strList.get(j);
+                        int intContent = intList.get(j);
+
+                        strList.set(j, strList.get(j+1));
+                        strList.set(j+1, strContent);
+
+                        intList.set(j, intList.get(j+1));
+                        intList.set(j+1, intContent);
+                    }
+                }
+            }
+        }
+        return strList;
+    }
+
 }
