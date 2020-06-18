@@ -36,6 +36,7 @@ public class JoinSubCommand implements SubCommand {
         GameManager gameManager = GameManager.getInstance();
         Game game = GameManager.getInstance().getGame(gameId);
         org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) sender;
+        Scoreboard scoreboard = new Scoreboard(gameId);
 
         Boolean isThereAPlayer = false;
 
@@ -47,6 +48,8 @@ public class JoinSubCommand implements SubCommand {
                             .isPresent();
         }
 
+        scoreboard.setScoreboard(bukkitPlayer);
+        scoreboard.setScore(bukkitPlayer.getName(),0);
         if(!isThereAPlayer) {
             if (configuration.isCreated()) {
                 //ソロの場合は、チームは全員違うチームになるのでプレイヤー数をいれている。

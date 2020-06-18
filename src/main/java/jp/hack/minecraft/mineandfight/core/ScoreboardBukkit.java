@@ -3,6 +3,7 @@ package jp.hack.minecraft.mineandfight.core;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
@@ -31,6 +32,7 @@ public class ScoreboardBukkit {
     }
 
     public void setScoreboard(Player player) {
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard);
     }
 
