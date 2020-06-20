@@ -184,11 +184,12 @@ public class MineAndFightLogic extends Game implements Listener {
     @Override
     public boolean onTask(long dt) {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
+        System.out.println(dt);
         if(dt > gametime) {
             timeBar.setProgress((gametime/dt));
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public List<String> sort( List<String> list1, List<Integer> list2 ) {
