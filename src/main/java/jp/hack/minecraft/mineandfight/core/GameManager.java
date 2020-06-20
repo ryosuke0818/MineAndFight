@@ -102,6 +102,8 @@ public class GameManager implements Listener {
             if(g.getGameArea().contains(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ())) {
                 g.onBlockBreakEvent(event);
                 break;
+            } else {
+                event.setCancelled(true);
             }
         }
     }

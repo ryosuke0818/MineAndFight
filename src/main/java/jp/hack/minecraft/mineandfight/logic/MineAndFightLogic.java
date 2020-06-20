@@ -52,7 +52,8 @@ public class MineAndFightLogic extends Game implements Listener {
             if (blockName.equals(oreName)) {
                 breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
                 scoreboard.setScore(breaker.getName(), breaker.getScore());
-                event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, event.getBlock().getLocation(), 10, 1.0, 1.0, 1.0);
+                Location blockLocation = event.getBlock().getLocation();
+                event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + 0.5, blockLocation.getY() + 0.5, blockLocation.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.5);
             } else if (!blockName.equals(Material.STONE.name())) {
                 event.setCancelled(true);
             }
@@ -154,12 +155,16 @@ public class MineAndFightLogic extends Game implements Listener {
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()) .getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()) .getBlock().setType(Material.AIR);
 
+            bukkitPlayer.setBedSpawnLocation(location);
             bukkitPlayer.teleport(location);
-            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) Math.floor(gametime/1000), 1));
-            bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
+            for (int i=0; i<PotionEffectType.values().length; i++) {
+                bukkitPlayer.removePotionEffect(PotionEffectType.values()[i]);
+            }
+            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)), 2));
             bukkitPlayer.getInventory().clear();
             bukkitPlayer.getInventory().setItem(0, new ItemStack(Material.DIAMOND_PICKAXE, 1));
             bukkitPlayer.getInventory().setItem(1, new ItemStack(Material.DIAMOND_SWORD, 1));
+            bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         });
 
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
