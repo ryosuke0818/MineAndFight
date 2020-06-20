@@ -3,6 +3,7 @@ package jp.hack.minecraft.mineandfight.core;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import jp.hack.minecraft.mineandfight.logic.MineAndFightLogic;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -126,6 +127,13 @@ public class GameManager implements Listener {
 
     public void start(String gameId){
         Game game = games.get(gameId);
+        Scoreboard scoreboard = new Scoreboard(gameId);
+
+        for (Player player : game.getJoinPlayers()) {
+            org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(player.getName());
+            scoreboard.setScoreboard(bukkitPlayer);
+            scoreboard.setScore(player.getName(),0);
+        }
         if(game!=null) {
             Future future = game.start(pool);
             if (future != null) {
