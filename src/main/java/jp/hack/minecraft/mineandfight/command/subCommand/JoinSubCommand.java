@@ -32,9 +32,8 @@ public class JoinSubCommand implements SubCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String gameId = args[0];
 
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
-        GameManager gameManager = GameManager.getInstance();
         Game game = GameManager.getInstance().getGame(gameId);
+        GameConfiguration configuration = game.getConfiguration();
         org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) sender;
         Scoreboard scoreboard = new Scoreboard(gameId);
 

@@ -39,9 +39,9 @@ public class ListSubCommand implements SubCommand {
         Player player = (Player) sender;
 
         String gameId = args[0];
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
         GameManager gameManager = GameManager.getInstance();
         Game game = gameManager.getGame(gameId);
+        GameConfiguration configuration = game.getConfiguration();
         StringBuilder builder = new StringBuilder();
 
         if(configuration.isCreated()) {
