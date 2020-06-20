@@ -46,6 +46,9 @@ public abstract class Game implements Runnable {
         }
     }
 
+    public GameConfiguration getConfiguration(){
+        return configuration;
+    }
     /*void delete() {
         configuration
     }*/

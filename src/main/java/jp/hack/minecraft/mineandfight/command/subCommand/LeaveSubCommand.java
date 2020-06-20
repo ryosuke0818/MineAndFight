@@ -38,9 +38,9 @@ public class LeaveSubCommand implements SubCommand {
             return false;
         }
         String gameId = args[0];
-        GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
         GameManager gameManager = GameManager.getInstance();
         Game game = gameManager.getGame(gameId);
+        GameConfiguration configuration = game.getConfiguration();
 
         if(configuration.isCreated()) {
             //ゲームから抜ける

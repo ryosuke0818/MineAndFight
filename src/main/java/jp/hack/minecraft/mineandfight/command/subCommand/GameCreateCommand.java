@@ -52,7 +52,7 @@ public class GameCreateCommand implements SubCommand {
     public boolean createGame(String gameId, org.bukkit.entity.Player player){
         Game game = GameManager.getInstance().createGame(plugin, gameId);
         if(game!=null) {
-            GameConfiguration configuration = GameConfiguration.create(plugin, gameId);
+            GameConfiguration configuration = game.getConfiguration();
             boolean ret = WorldEditorUtil.saveStage(player, configuration);
             if (ret) {
                 BoundingBox box = BoundingBox.of(configuration.getPos1(), configuration.getPos2());
