@@ -6,6 +6,7 @@ public class HostSubCommand extends GameCommandExecutor {
     public HostSubCommand(GamePlugin plugin) {
         super(plugin);
         addSubCommand(new GameStartCommand(plugin));
+        addSubCommand(new GameStopCommand(plugin));
         addSubCommand(new GameCreateCommand(plugin));
         addSubCommand(new GameDeleteCommand(plugin));
         addSubCommand(new GameListCommand(plugin));

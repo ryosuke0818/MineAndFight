@@ -48,6 +48,10 @@ public class GameManager implements Listener {
         return games.get(id);
     }
 
+    public List<String> getGameNames() {
+        return new ArrayList<>(games.keySet());
+    }
+
     public Game createGame(GamePlugin plugin, String id){
         Game game =  generator.createGame(plugin, id);
         games.put(id, game);

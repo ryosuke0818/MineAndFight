@@ -12,16 +12,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameDeleteCommand implements SubCommand {
+public class GameStopCommand implements SubCommand {
     GamePlugin plugin;
 
-    public GameDeleteCommand(GamePlugin plugin) {
+    public GameStopCommand(GamePlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public String getName() {
-        return "delete";
+        return "stop";
     }
 
     @Override
@@ -38,9 +38,7 @@ public class GameDeleteCommand implements SubCommand {
         String gameId = args[0];
 
         GameManager gameManager = GameManager.getInstance();
-        MainConfiguration mainConfiguration = new MainConfiguration(new File("resources/config.yml"));
-
-        mainConfiguration.deleteGame(gameId);
+        gameManager.stop(gameId);
 
         return true;
     }

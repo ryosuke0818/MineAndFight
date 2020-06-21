@@ -1,12 +1,9 @@
 package jp.hack.minecraft.mineandfight.command.subCommand;
 
-import jp.hack.minecraft.mineandfight.Main;
 import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
-import jp.hack.minecraft.mineandfight.logic.MineAndFightLogic;
-import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -52,6 +49,7 @@ public class GameStartCommand implements SubCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return new ArrayList<>();
+        GameManager gameManager = GameManager.getInstance();
+        return gameManager.getGameNames();
     }
 }
