@@ -3,9 +3,15 @@ package jp.hack.minecraft.mineandfight.logic;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import org.bukkit.*;
+import org.bukkit.Effect;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Item;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -39,13 +45,17 @@ public class MineAndFightLogic extends Game implements Listener {
         if(getJoinPlayers().contains(breaker)) {
             LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
-            final String oreName = Material.EMERALD_ORE.data.getName();
-            String blockName = event.getBlock().getBlockData().getMaterial().getData().getName();
+            final String oreName = Material.EMERALD_ORE.name();
+            String blockName = event.getBlock().getType().name();
 
+            event.setDropItems(false);
             if (blockName.equals(oreName)) {
                 breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
-
                 scoreboard.setScore(breaker.getName(), breaker.getScore());
+                Location blockLocation = event.getBlock().getLocation();
+                event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + 0.5, blockLocation.getY() + 0.5, blockLocation.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.5);
+            } else if (!blockName.equals(Material.STONE.name())) {
+                event.setCancelled(true);
             }
         }
     }
@@ -141,9 +151,19 @@ public class MineAndFightLogic extends Game implements Listener {
             scoreboard.setScore(p.getName(), 0);
             scoreboard.setScoreboard(bukkitPlayer);
 
-            double minY = Math.min(minVec.getY(), maxVec.getY()) + 1;
-            Location location = new Location(configuration.getOrigin().getWorld(), minVec.getX(), minY, minVec.getZ(), 1, 0);
+            Location location = playerNumLoc(world, minVec, maxVec, 0);
+            new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()) .getBlock().setType(Material.AIR);
+            new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()) .getBlock().setType(Material.AIR);
+
+            bukkitPlayer.setBedSpawnLocation(location);
             bukkitPlayer.teleport(location);
+            for (int i=0; i<PotionEffectType.values().length; i++) {
+                bukkitPlayer.removePotionEffect(PotionEffectType.values()[i]);
+            }
+            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)), 2));
+            bukkitPlayer.getInventory().clear();
+            bukkitPlayer.getInventory().setItem(0, new ItemStack(Material.DIAMOND_PICKAXE, 1));
+            bukkitPlayer.getInventory().setItem(1, new ItemStack(Material.DIAMOND_SWORD, 1));
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         });
 
@@ -174,6 +194,8 @@ public class MineAndFightLogic extends Game implements Listener {
             scoreMap.put(p.getName(), p.getScore());
             players.add(p.getName());
             scores.add(p.getScore());
+            p.setBounty(0);
+            p.setScore(0);
         });
 
         ranking = sort(players, scores);
@@ -184,11 +206,12 @@ public class MineAndFightLogic extends Game implements Listener {
     @Override
     public boolean onTask(long dt) {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
+        System.out.println(dt);
         if(dt > gametime) {
             timeBar.setProgress((gametime/dt));
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public List<String> sort( List<String> list1, List<Integer> list2 ) {
@@ -212,6 +235,31 @@ public class MineAndFightLogic extends Game implements Listener {
             }
         }
         return strList;
+    }
+
+    public Location playerNumLoc(World world, Vector minVec, Vector maxVec, int number) {
+        Location location = new Location(world, 0.0, 0.0, 0.0);
+
+        switch (number) {
+            case 0 :
+                location.setX( minVec.getBlockX() +1 );
+                location.setY( minVec.getBlockY() +1 );
+                location.setZ( minVec.getBlockZ() +1 );
+                break;
+            case 1 :
+                location.setX( maxVec.getBlockX() -1 );
+                location.setY( minVec.getBlockY() +1 );
+                location.setZ( minVec.getBlockZ() +1 );
+            case 2 :
+                location.setX( maxVec.getBlockX() -1 );
+                location.setY( minVec.getBlockY() +1 );
+                location.setZ( maxVec.getBlockZ() -1 );
+            case 3 :
+                location.setX( minVec.getBlockX() +1 );
+                location.setY( minVec.getBlockY() +1 );
+                location.setZ( maxVec.getBlockZ() -1 );
+        }
+        return location;
     }
 
 }
