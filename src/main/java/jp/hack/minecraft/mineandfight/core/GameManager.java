@@ -42,6 +42,16 @@ public class GameManager implements Listener {
         });
     }
 
+    public void release() {
+        if(pool!=null) pool.shutdown();
+        games.clear();
+        runningGames.values().stream().forEach(game->{
+            game.cancel();
+        });
+        runningGames.clear();
+
+    }
+
 
     public Game getGame(String id){
         return games.get(id);
