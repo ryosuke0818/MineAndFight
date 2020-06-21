@@ -17,4 +17,11 @@ public final class Main extends GamePlugin {
 
         GameManager.getInstance().loadGame(this);
     }
+
+    @Override
+    public void onDisable(){
+        super.onDisable();
+
+        GameManager.getInstance().release();
+    }
 }
