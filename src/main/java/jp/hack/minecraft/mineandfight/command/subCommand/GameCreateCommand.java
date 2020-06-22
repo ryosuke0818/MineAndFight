@@ -68,12 +68,12 @@ public class GameCreateCommand implements SubCommand {
                 configuration.setRespawns(respawns);
                 configuration.save();
 
-            player.sendMessage(ChatColor.GREEN +"Successed!");
+            player.sendMessage(ChatColor.GREEN +"Successed: Created " + gameId + ".");
             return true;
 
             }
         }
-        player.sendMessage(ChatColor.RED+"You must set positions!");
+        player.sendMessage(ChatColor.RED+"Error: You must set positions!");
         return false;
     }
 

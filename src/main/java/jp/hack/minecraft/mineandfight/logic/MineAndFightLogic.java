@@ -1,5 +1,6 @@
 package jp.hack.minecraft.mineandfight.logic;
 
+import com.sk89q.worldedit.bukkit.adapter.BukkitImplAdapter;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import org.bukkit.*;
@@ -151,19 +152,22 @@ public class MineAndFightLogic extends Game implements Listener {
             scoreboard.setScore(p.getName(), 0);
             scoreboard.setScoreboard(bukkitPlayer);
 
+            p.setFirstLocation(bukkitPlayer.getLocation());
             Location location = playerNumLoc(world, minVec, maxVec, 0);
-            new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()) .getBlock().setType(Material.AIR);
-            new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()) .getBlock().setType(Material.AIR);
+            new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
+            new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
 
             bukkitPlayer.setBedSpawnLocation(location);
+
+            p.setFirstInventory(bukkitPlayer.getInventory());
+            bukkitPlayer.getInventory().clear();
+            bukkitPlayer.getInventory().setItem(0, new ItemStack(Material.DIAMOND_PICKAXE, 1));
+            bukkitPlayer.getInventory().setItem(1, new ItemStack(Material.DIAMOND_SWORD, 1));
             bukkitPlayer.teleport(location);
             for (int i=0; i<PotionEffectType.values().length; i++) {
                 bukkitPlayer.removePotionEffect(PotionEffectType.values()[i]);
             }
-            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)), 2));
-            bukkitPlayer.getInventory().clear();
-            bukkitPlayer.getInventory().setItem(0, new ItemStack(Material.DIAMOND_PICKAXE, 1));
-            bukkitPlayer.getInventory().setItem(1, new ItemStack(Material.DIAMOND_SWORD, 1));
+            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         });
 
@@ -176,11 +180,6 @@ public class MineAndFightLogic extends Game implements Listener {
     @Override
     public void onStop() {
         //TODO ゲームが停止されたら呼ばれます。
-
-        getJoinPlayers().stream().forEach(p->{
-            org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
-            scoreboard.resetScoreboard(bukkitPlayer);
-        });
     }
 
     @Override
@@ -191,11 +190,16 @@ public class MineAndFightLogic extends Game implements Listener {
         List<String> players = new ArrayList<>();
         List<Integer> scores = new ArrayList<>();
         getJoinPlayers().stream().forEach(p->{
+            org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
             scoreMap.put(p.getName(), p.getScore());
             players.add(p.getName());
             scores.add(p.getScore());
+            bukkitPlayer.teleport(p.getFirstLocation());
+            bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
             p.setBounty(0);
             p.setScore(0);
+            scoreboard.resetScoreboard(bukkitPlayer);
+            p.setIsPlayingGame(false);
         });
 
         ranking = sort(players, scores);

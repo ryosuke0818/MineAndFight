@@ -68,6 +68,10 @@ public class GameManager implements Listener {
         return game;
     }
 
+    public void deleteGame(String id) {
+        games.remove(id);
+    }
+
     public void setGenerator(GameGenerator generator){
         this.generator = generator;
     }

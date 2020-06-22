@@ -6,6 +6,7 @@ import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -45,6 +46,10 @@ public class LeaveSubCommand implements SubCommand {
         if(configuration.isCreated()) {
             //ゲームから抜ける
             game.removePlayer(player.getUniqueId());
+            sender.sendMessage(ChatColor.GREEN +"Successed: You left " + gameId + ".");
+        } else {
+            sender.sendMessage(ChatColor.RED +"Error: No such game.");
+            return false;
         }
 
         return true;

@@ -5,6 +5,7 @@ import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -38,9 +39,17 @@ public class GameDeleteCommand implements SubCommand {
         String gameId = args[0];
 
         GameManager gameManager = GameManager.getInstance();
-        MainConfiguration mainConfiguration = new MainConfiguration(new File("resources/config.yml"));
+        if (gameManager.getGameNames().contains(gameId)) {
+            MainConfiguration mainConfiguration = new MainConfiguration(new File("resources/config.yml"));
 
-        mainConfiguration.deleteGame(gameId);
+
+            gameManager.deleteGame(gameId);
+            mainConfiguration.deleteGame(gameId);
+
+            sender.sendMessage(ChatColor.GREEN + "Successed: You deleted " + gameId + ".");
+        } else {
+            sender.sendMessage(ChatColor.RED + "Error: No such game.");
+        }
 
         return true;
     }

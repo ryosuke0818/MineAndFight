@@ -1,6 +1,8 @@
 package jp.hack.minecraft.mineandfight.core;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.inventory.Inventory;
 
 import java.util.UUID;
 
@@ -10,10 +12,15 @@ public class Player {
     private int teamId;
     private int score;
     private int bounty;
+    private Location firstLocation;
+    private Inventory firstInventory;
+    private Boolean isPlayingGame;
 
     public Player(UUID uuid){
         this.uuid = uuid;
         name = Bukkit.getPlayer(uuid).getName();
+        setFirstLocation(Bukkit.getPlayer(uuid).getLocation());
+        setFirstInventory(Bukkit.getPlayer(uuid).getInventory());
     }
 
     public UUID getUuid() {
@@ -46,5 +53,29 @@ public class Player {
 
     public void setBounty(int bounty) {
         this.bounty = bounty;
+    }
+
+    public Location getFirstLocation() {
+        return firstLocation;
+    }
+
+    public void setFirstLocation(Location location) {
+        firstLocation = location;
+    }
+
+    public Inventory getFirstInventory() {
+        return firstInventory;
+    }
+
+    public void setFirstInventory(Inventory inventory) {
+        firstInventory = inventory;
+    }
+
+    public Boolean getIsPlayingGame() {
+        return isPlayingGame;
+    }
+
+    public void setIsPlayingGame(boolean isPlayingGame) {
+        this.isPlayingGame = isPlayingGame;
     }
 }
