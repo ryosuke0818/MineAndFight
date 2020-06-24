@@ -83,6 +83,10 @@ public abstract class Game implements Runnable {
         return players.get(uuid);
     }
 
+    public boolean isTherePlayer(UUID uuid) {
+        return players.containsKey(uuid);
+    }
+
     public Collection<Team> getTeams(){
         return teams.values();
     }

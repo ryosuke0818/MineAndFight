@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,28 +34,33 @@ public class JoinSubCommand implements SubCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         String gameId = args[0];
 
-        Game game = GameManager.getInstance().getGame(gameId);
-        GameConfiguration configuration = game.getConfiguration();
         org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) sender;
-        Player player = new Player(bukkitPlayer.getUniqueId());
+        GameManager gameManager = GameManager.getInstance();
+        Boolean isPlayerJoinedGame = false;
 
-        if(!player.getIsPlayingGame()) {
+        Game game = gameManager.getGame(gameId);
+        GameConfiguration configuration = game.getConfiguration();
+
+        for(String gameName : gameManager.getGameNames()) {
+            isPlayerJoinedGame = gameManager.getGame(gameName).isTherePlayer(bukkitPlayer.getUniqueId());
+        }
+
+        if(isPlayerJoinedGame) {
             if (configuration.isCreated()) {
                 //ソロの場合は、チームは全員違うチームになるのでプレイヤー数をいれている。
                 //チームが複数ある場合は プレイヤー数%チーム数で　自動的に割り振りができる
                 int teamId = 0;
 
-                player.setTeamId(teamId);
-                player.setIsPlayingGame(true);
+                Player player = new Player(bukkitPlayer.getUniqueId());
                 game.addPlayer(player);
-                sender.sendMessage(ChatColor.GREEN +"Successed: You joined "+gameId+".");
+                bukkitPlayer.sendMessage(ChatColor.GREEN +"Successed: You joined "+gameId+".");
                 return true;
             } else {
-                sender.sendMessage(ChatColor.RED +"Error: No such game.");
-                sender.sendMessage(I18n.tl("error.command.uncreated.game", gameId));
+                bukkitPlayer.sendMessage(ChatColor.RED +"Error: No such game.");
+                bukkitPlayer.sendMessage(I18n.tl("error.command.uncreated.game", gameId));
             }
         } else {
-            sender.sendMessage(ChatColor.RED +"Error: You have already join game!");
+            bukkitPlayer.sendMessage(ChatColor.RED +"Error: You have already join game!");
         }
         return false;
     }
