@@ -43,6 +43,7 @@ public class JoinSubCommand implements SubCommand {
 
         for(String gameName : gameManager.getGameNames()) {
             isPlayerJoinedGame = gameManager.getGame(gameName).isTherePlayer(bukkitPlayer.getUniqueId());
+            if (isPlayerJoinedGame) break;
         }
 
         if(isPlayerJoinedGame) {
