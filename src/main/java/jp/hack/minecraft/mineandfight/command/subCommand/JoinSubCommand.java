@@ -46,7 +46,7 @@ public class JoinSubCommand implements SubCommand {
             if (isPlayerJoinedGame) break;
         }
 
-        if(isPlayerJoinedGame) {
+        if(!isPlayerJoinedGame) {
             if (configuration.isCreated()) {
                 //ソロの場合は、チームは全員違うチームになるのでプレイヤー数をいれている。
                 //チームが複数ある場合は プレイヤー数%チーム数で　自動的に割り振りができる
