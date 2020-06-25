@@ -45,7 +45,7 @@ public class JoinSubCommand implements SubCommand {
             isPlayerJoinedGame = gameManager.getGame(gameName).isTherePlayer(bukkitPlayer.getUniqueId());
         }
 
-        if(isPlayerJoinedGame) {
+        if(!isPlayerJoinedGame) {
             if (configuration.isCreated()) {
                 //ソロの場合は、チームは全員違うチームになるのでプレイヤー数をいれている。
                 //チームが複数ある場合は プレイヤー数%チーム数で　自動的に割り振りができる
