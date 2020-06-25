@@ -199,7 +199,6 @@ public class MineAndFightLogic extends Game implements Listener {
             p.setBounty(0);
             p.setScore(0);
             scoreboard.resetScoreboard(bukkitPlayer);
-            p.setIsPlayingGame(false);
         });
 
         ranking = sort(players, scores);

@@ -70,12 +70,4 @@ public class Player {
     public void setFirstInventory(Inventory inventory) {
         firstInventory = inventory;
     }
-
-    public Boolean getIsPlayingGame() {
-        return isPlayingGame;
-    }
-
-    public void setIsPlayingGame(boolean isPlayingGame) {
-        this.isPlayingGame = isPlayingGame;
-    }
 }
