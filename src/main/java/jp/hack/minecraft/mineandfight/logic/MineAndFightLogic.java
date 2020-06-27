@@ -1,12 +1,8 @@
 package jp.hack.minecraft.mineandfight.logic;
 
-import com.sk89q.worldedit.bukkit.adapter.BukkitImplAdapter;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import org.bukkit.*;
-import org.bukkit.Effect;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Item;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -76,6 +72,9 @@ public class MineAndFightLogic extends Game implements Listener {
 
                 scoreboard.setScore(killer.getName(), killer.getScore());
             }
+
+            org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(killed.getUuid());
+            bukkitKilled.setGameMode(GameMode.SPECTATOR);
         }
     }
 
