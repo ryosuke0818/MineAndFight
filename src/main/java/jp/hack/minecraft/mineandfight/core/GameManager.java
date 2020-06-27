@@ -86,6 +86,15 @@ public class GameManager implements Listener {
         }
     }
 
+    public Game findGame(UUID playerID){
+        for(Iterator<Game> ite = games.values().iterator(); ite.hasNext(); ){
+            Game g = ite.next();
+            if(g.findPlayer(playerID) != null) return g;
+        }
+        return null;
+    }
+
+
     @EventHandler
     public void onLogin(PlayerJoinEvent event) {
         for(Iterator<Game> ite=runningGames.values().iterator(); ite.hasNext();){
