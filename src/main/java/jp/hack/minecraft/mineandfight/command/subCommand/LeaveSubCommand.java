@@ -34,19 +34,13 @@ public class LeaveSubCommand implements SubCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
-        if(args.length < 1){
-            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
-            return false;
-        }
-        String gameId = args[0];
         GameManager gameManager = GameManager.getInstance();
-        Game game = gameManager.getGame(gameId);
-        GameConfiguration configuration = game.getConfiguration();
 
-        if(configuration.isCreated()) {
+        Game game = gameManager.findGame(player.getUniqueId());
+        if(game!=null){
             //ゲームから抜ける
             game.removePlayer(player.getUniqueId());
-            sender.sendMessage(ChatColor.GREEN +"Successed: You left " + gameId + ".");
+            sender.sendMessage(ChatColor.GREEN +"Successed: You left " + game.getId() + ".");
         } else {
             sender.sendMessage(ChatColor.RED +"Error: No such game.");
             return false;
