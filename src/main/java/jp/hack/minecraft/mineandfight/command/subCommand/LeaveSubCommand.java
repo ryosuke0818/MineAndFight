@@ -57,6 +57,8 @@ public class LeaveSubCommand implements SubCommand {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return new ArrayList<>();
+        GameManager gameManager = GameManager.getInstance();
+        if(args.length < 2) return gameManager.getGameNames();
+        else                return new ArrayList<>();
     }
 }

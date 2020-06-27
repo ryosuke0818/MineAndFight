@@ -170,8 +170,9 @@ public class MineAndFightLogic extends Game implements Listener {
                 bukkitPlayer.removePotionEffect(PotionEffectType.values()[j]);
             }
             bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
+            bukkitPlayer.setGameMode(GameMode.SURVIVAL);
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
-        });
+        }
 
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 

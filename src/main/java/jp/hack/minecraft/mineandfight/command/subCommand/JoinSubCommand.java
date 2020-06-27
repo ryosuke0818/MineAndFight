@@ -5,6 +5,7 @@ import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
 import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -55,6 +56,10 @@ public class JoinSubCommand implements SubCommand {
                 Player player = new Player(bukkitPlayer.getUniqueId());
                 game.addPlayer(player);
                 bukkitPlayer.sendMessage(ChatColor.GREEN +"Successed: You joined "+gameId+".");
+                game.getJoinPlayers().stream().forEach(p->{
+                    org.bukkit.entity.Player bP = Bukkit.getPlayer(p.getUuid());
+                    bP.sendMessage(ChatColor.GREEN +player.getName()+" joined us!");
+                });
                 return true;
             } else {
                 bukkitPlayer.sendMessage(ChatColor.RED +"Error: No such game.");

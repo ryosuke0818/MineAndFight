@@ -50,6 +50,7 @@ public class GameStartCommand implements SubCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         GameManager gameManager = GameManager.getInstance();
-        return gameManager.getGameNames();
+        if(args.length < 3) return gameManager.getGameNames();
+        else                return new ArrayList<>();
     }
 }
