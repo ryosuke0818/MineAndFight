@@ -18,4 +18,8 @@ public class TimeBar {
             bossBar.setProgress(percent);
         }
     }
+
+    public void stop() {
+        bossBar.removeAll();
+    }
 }

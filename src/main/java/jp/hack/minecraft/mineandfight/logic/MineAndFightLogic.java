@@ -174,6 +174,8 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
         }
 
+        timeBar = new TimeBar(plugin);
+
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 
         Bukkit.broadcastMessage("game start");
@@ -206,6 +208,8 @@ public class MineAndFightLogic extends Game implements Listener {
         });
 
         ranking = sort(players, scores);
+
+        timeBar.stop();
 
         Bukkit.broadcastMessage("game stop");
     }
