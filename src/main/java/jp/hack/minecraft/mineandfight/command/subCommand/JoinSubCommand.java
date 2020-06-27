@@ -83,16 +83,12 @@ public class JoinSubCommand implements SubCommand {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         GameManager gameManager = GameManager.getInstance();
         List<String> games = gameManager.getGameNames();
-        if (args.length > 0 && args[0].length() > 0) {
-            return games.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
-        } else {
-
-            if(args.length < 1) {
-                return games;
-            } else {
-                return new ArrayList<>();
+        if (args.length == 1) {
+            if (args[0].length() > 0) {
+                return games.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
             }
-
+            return games;
         }
+        return new ArrayList<>();
     }
 }

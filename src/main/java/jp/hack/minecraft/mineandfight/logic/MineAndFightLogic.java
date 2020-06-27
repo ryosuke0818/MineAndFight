@@ -6,10 +6,12 @@ import org.bukkit.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -74,10 +76,17 @@ public class MineAndFightLogic extends Game implements Listener {
             killed.setPlayingGame(false);
 
             org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(killed.getUuid());
+            bukkitKilled.teleport(killed.getSpawnLocation());
             bukkitKilled.setGameMode(GameMode.SPECTATOR);
         }
     }
 
+    public void onSpawnEvent(PlayerRespawnEvent event) {
+        Player player = findPlayer(event.getPlayer().getUniqueId());
+        if(getJoinPlayers().contains(player)) {
+            event.getPlayer().teleport(player.getSpawnLocation());
+        }
+    }
 
     @Override
     public void onStart() {
@@ -157,8 +166,7 @@ public class MineAndFightLogic extends Game implements Listener {
             Location location = playerNumLoc(world, minVec, maxVec, i);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
-
-            bukkitPlayer.setBedSpawnLocation(location);
+            p.setSpawnLocation(location);
 
             p.setFirstInventory(bukkitPlayer.getInventory());
             bukkitPlayer.getInventory().clear();

@@ -12,6 +12,7 @@ public class Player {
     private int teamId;
     private int score;
     private int bounty;
+    private Location spawnLocation;
     private Location firstLocation;
     private Inventory firstInventory;
     private Boolean isPlayingGame;
@@ -53,6 +54,14 @@ public class Player {
 
     public void setBounty(int bounty) {
         this.bounty = bounty;
+    }
+
+    public Location getSpawnLocation() {
+        return spawnLocation;
+    }
+
+    public void setSpawnLocation(Location location) {
+        spawnLocation = location;
     }
 
     public Location getFirstLocation() {
