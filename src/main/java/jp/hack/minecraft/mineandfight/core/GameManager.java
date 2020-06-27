@@ -112,9 +112,11 @@ public class GameManager implements Listener {
         for(Iterator<Game> ite=runningGames.values().iterator(); ite.hasNext();) {
             Game g = ite.next();
             if(g.findPlayer(event​.getPlayer().getUniqueId())!=null){
-                if(g.getGameArea().contains(event​.getTo().toVector()) != true){
-                    event​.setCancelled(true);
-                    break;
+                if(g.findPlayer(event​.getPlayer().getUniqueId()).isPlayingGame()) {
+                    if (g.getGameArea().contains(event​.getTo().toVector()) != true) {
+                        event​.setCancelled(true);
+                        break;
+                    }
                 }
             }
         }
@@ -139,7 +141,8 @@ public class GameManager implements Listener {
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         for(Iterator<Game> ite=runningGames.values().iterator(); ite.hasNext();){
             Game g = ite.next();
-            if(g.findPlayer(event.getEntity().getUniqueId())!=null) {
+            Player player = g.findPlayer(event.getEntity().getUniqueId());
+            if (player != null && player.isPlayingGame()) {
                 g.onPlayerDeathEvent(event);
                 break;
             }
@@ -162,6 +165,7 @@ public class GameManager implements Listener {
             org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(player.getName());
             scoreboard.setScoreboard(bukkitPlayer);
             scoreboard.setScore(player.getName(),0);
+            player.setPlayingGame(true);
         }
         if(game!=null) {
             Future future = game.start(pool);
