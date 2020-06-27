@@ -70,4 +70,12 @@ public class Player {
     public void setFirstInventory(Inventory inventory) {
         firstInventory = inventory;
     }
+
+    public Boolean isPlayingGame() {
+        return isPlayingGame;
+    }
+
+    public void setPlayingGame(Boolean playingGame) {
+        isPlayingGame = playingGame;
+    }
 }
