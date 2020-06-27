@@ -33,7 +33,6 @@ public class MineAndFightLogic extends Game implements Listener {
         gameId = id;
         scoreboard = new Scoreboard(id);
         game = gameManager.getGame(id);
-        timeBar = new TimeBar(plugin);
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){

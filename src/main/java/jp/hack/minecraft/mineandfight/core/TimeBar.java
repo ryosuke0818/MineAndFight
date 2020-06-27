@@ -11,6 +11,7 @@ public class TimeBar {
     public TimeBar(Plugin plugin) {
         bossBar = plugin.getServer().createBossBar("ボスヴァー", BarColor.YELLOW, BarStyle.SOLID);
         bossBar.setVisible(true);
+        bossBar.setProgress(0.0);
     }
 
     public void setProgress(double percent) {
