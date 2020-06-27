@@ -6,9 +6,9 @@ public class Scoreboard {
     private final ScoreboardBukkit scoreboardBukkit;
     private final String gameId;
 
-    public Scoreboard(String gameId) {
+    public Scoreboard(String gameId,String displayName) {
         this.gameId = gameId;
-        scoreboardBukkit = new ScoreboardBukkit(gameId);
+        scoreboardBukkit = new ScoreboardBukkit(gameId,displayName);
     }
 
     public String getGameId() {

@@ -31,7 +31,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public MineAndFightLogic(GamePlugin plugin, String id) {
         super(plugin, id);
         gameId = id;
-        scoreboard = new Scoreboard(id);
+        scoreboard = new Scoreboard(id, ChatColor.GREEN +"SCORE");
         game = gameManager.getGame(id);
     }
 
@@ -143,7 +143,7 @@ public class MineAndFightLogic extends Game implements Listener {
                                     });
                         });
 
-        scoreboard = new Scoreboard(gameId);
+        // scoreboard = new Scoreboard(gameId);
 
         //TITLE
         List<Player> players = new ArrayList(getJoinPlayers());

@@ -11,10 +11,11 @@ import org.bukkit.scoreboard.ScoreboardManager;
 public class ScoreboardBukkit {
     private final ScoreboardManager manager = Bukkit.getScoreboardManager();
     private final Scoreboard scoreboard = manager.getNewScoreboard();
-    private String displayName = ChatColor.GREEN +"SCORE";
+    private String displayName;
     private Objective objective;
 
-    ScoreboardBukkit(String gameId) {
+    ScoreboardBukkit(String gameId,String displayName) {
+        this.displayName = displayName;
         Boolean isThereAObjective = scoreboard.getObjectives().stream()
                 .filter(objective -> gameId.equals(objective.getName()))
                 .findAny()
@@ -23,7 +24,7 @@ public class ScoreboardBukkit {
         if (isThereAObjective) {
             objective = scoreboard.getObjective(gameId);
         } else {
-            objective = scoreboard.registerNewObjective(gameId, "dummy", displayName);
+            objective = scoreboard.registerNewObjective(gameId, "dummy", this.displayName);
         }
     }
 

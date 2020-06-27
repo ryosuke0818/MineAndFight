@@ -39,6 +39,7 @@ public class JoinSubCommand implements SubCommand {
         org.bukkit.entity.Player bukkitPlayer = (org.bukkit.entity.Player) sender;
         GameManager gameManager = GameManager.getInstance();
         Boolean isPlayerJoinedGame = false;
+        Scoreboard scoreboard = new Scoreboard(gameId,ChatColor.GREEN +"PLAYERS");
 
         Game game = gameManager.getGame(gameId);
         GameConfiguration configuration = game.getConfiguration();
@@ -61,6 +62,12 @@ public class JoinSubCommand implements SubCommand {
                     org.bukkit.entity.Player bP = Bukkit.getPlayer(p.getUuid());
                     bP.sendMessage(ChatColor.GREEN +player.getName()+" joined us!");
                 });
+
+                //Scoreboard
+                for(Player p : game.getJoinPlayers()){
+                    scoreboard.setScoreboard(Bukkit.getPlayer(p.getName()));
+                    scoreboard.setScore(p.getName(),0);
+                }
                 return true;
             } else {
                 bukkitPlayer.sendMessage(ChatColor.RED +"Error: No such game.");
