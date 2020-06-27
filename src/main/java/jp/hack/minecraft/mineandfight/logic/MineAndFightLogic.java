@@ -147,13 +147,15 @@ public class MineAndFightLogic extends Game implements Listener {
         scoreboard = new Scoreboard(gameId);
 
         //TITLE
-        getJoinPlayers().stream().forEach(p->{
+        List<Player> players = new ArrayList(getJoinPlayers());
+        for(int i=0; i<players.size(); i++) {
+            Player p = players.get(i);
             org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
             scoreboard.setScore(p.getName(), 0);
             scoreboard.setScoreboard(bukkitPlayer);
 
             p.setFirstLocation(bukkitPlayer.getLocation());
-            Location location = playerNumLoc(world, minVec, maxVec, 0);
+            Location location = playerNumLoc(world, minVec, maxVec, i);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
 
@@ -164,8 +166,8 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.getInventory().setItem(0, new ItemStack(Material.DIAMOND_PICKAXE, 1));
             bukkitPlayer.getInventory().setItem(1, new ItemStack(Material.DIAMOND_SWORD, 1));
             bukkitPlayer.teleport(location);
-            for (int i=0; i<PotionEffectType.values().length; i++) {
-                bukkitPlayer.removePotionEffect(PotionEffectType.values()[i]);
+            for (int j=0; j<PotionEffectType.values().length; j++) {
+                bukkitPlayer.removePotionEffect(PotionEffectType.values()[j]);
             }
             bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
             bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
