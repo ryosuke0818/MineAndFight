@@ -46,7 +46,7 @@ public class GameStopCommand implements SubCommand {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         GameManager gameManager = GameManager.getInstance();
-        if(args.length < 3) return gameManager.getGameNames();
+        if(args.length < 2) return gameManager.getGameNames();
         else                return new ArrayList<>();
     }
 }
