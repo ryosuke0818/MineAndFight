@@ -201,6 +201,7 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
             p.setBounty(0);
             p.setScore(0);
+            game.removePlayer(p.getUuid());
             scoreboard.resetScoreboard(bukkitPlayer);
         });
 
