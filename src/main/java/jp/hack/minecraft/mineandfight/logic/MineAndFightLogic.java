@@ -81,7 +81,7 @@ public class MineAndFightLogic extends Game implements Listener {
         }
     }
 
-    public void onSpawnEvent(PlayerRespawnEvent event) {
+    public void onRespawnEvent(PlayerRespawnEvent event) {
         Player player = findPlayer(event.getPlayer().getUniqueId());
         if(getJoinPlayers().contains(player)) {
             event.getPlayer().teleport(player.getSpawnLocation());
@@ -186,7 +186,6 @@ public class MineAndFightLogic extends Game implements Listener {
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 
         Bukkit.broadcastMessage("game start");
-
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.BoundingBox;
 
 import java.util.*;
@@ -115,6 +116,10 @@ public abstract class Game implements Runnable {
 
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+    }
+
+    public void onRespawnEvent(PlayerRespawnEvent event) {
+        LOGGER.info(String.format("onRespawnEvent: %s", event.getPlayer().getName()));
     }
 
     @Override

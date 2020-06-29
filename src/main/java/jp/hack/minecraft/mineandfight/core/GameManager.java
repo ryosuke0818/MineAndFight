@@ -18,6 +18,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
@@ -145,6 +146,18 @@ public class GameManager implements Listener {
             Player player = g.findPlayer(event.getEntity().getUniqueId());
             if (player != null && player.isPlayingGame()) {
                 g.onPlayerDeathEvent(event);
+                break;
+            }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+        for(Iterator<Game> ite=runningGames.values().iterator(); ite.hasNext();){
+            Game g = ite.next();
+            Player player = g.findPlayer(event.getPlayer().getUniqueId());
+            if (player != null && player.isPlayingGame()) {
+                g.onRespawnEvent(event);
                 break;
             }
         }
