@@ -172,7 +172,7 @@ public class MineAndFightLogic extends Game implements Listener {
             }
             bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-            bukkitPlayer.sendTitle(ChatColor.GREEN +"GAME START", "", 1, 2, 1);
+            bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME START", "", 20, 30, 20);
         }
 
         timeBar = new TimeBar(plugin);
@@ -202,7 +202,7 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.teleport(p.getFirstLocation());
             bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-            bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER", "", 1, 2, 1);
+            bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER", "", 20, 30, 20);
 
             Firework firework = bukkitPlayer.getWorld()
                     .spawn(bukkitPlayer.getLocation(), Firework.class);
