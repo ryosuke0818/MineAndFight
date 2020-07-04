@@ -71,8 +71,8 @@ public class MineAndFightLogic extends Game implements Listener {
         }
 
         org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(killed.getUuid());
-        bukkitKilled.teleport(killed.getRespawnLocation());
         bukkitKilled.setGameMode(GameMode.SPECTATOR);
+        killed.setPlayingGame(false);
     }
 
     public void onRespawnEvent(PlayerRespawnEvent event) {
@@ -199,6 +199,8 @@ public class MineAndFightLogic extends Game implements Listener {
             scores.add(p.getScore());
             bukkitPlayer.teleport(p.getFirstLocation());
             bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
+            bukkitPlayer.setGameMode(GameMode.SURVIVAL);
+            //bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER");
             p.setBounty(0);
             p.setScore(0);
             game.removePlayer(p.getUuid());
