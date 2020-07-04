@@ -159,9 +159,9 @@ public class MineAndFightLogic extends Game implements Listener {
 
             p.setFirstLocation(bukkitPlayer.getLocation());
             Location location = playerNumLoc(world, minVec, maxVec, i);
+            System.out.println(location);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
-            p.setRespawnLocation(location);
 
             p.setFirstInventory(bukkitPlayer.getInventory());
             bukkitPlayer.getInventory().clear();
