@@ -56,11 +56,11 @@ public class Player {
         this.bounty = bounty;
     }
 
-    public Location getSpawnLocation() {
+    public Location getRespawnLocation() {
         return spawnLocation;
     }
 
-    public void setSpawnLocation(Location location) {
+    public void setRespawnLocation(Location location) {
         spawnLocation = location;
     }
 

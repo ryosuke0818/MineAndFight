@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -40,52 +39,45 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onBlockBreakEvent(BlockBreakEvent event){
         Player breaker = findPlayer(event.getPlayer().getUniqueId());
 
-        if(getJoinPlayers().contains(breaker)) {
-            LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
+        LOGGER.info(String.format("onBlockBreakEvent: %s", event.getPlayer().getName()));
 
-            final String oreName = Material.EMERALD_ORE.name();
-            String blockName = event.getBlock().getType().name();
+        final String oreName = Material.EMERALD_ORE.name();
+        String blockName = event.getBlock().getType().name();
 
-            event.setDropItems(false);
-            if (blockName.equals(oreName)) {
-                breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
-                scoreboard.setScore(breaker.getName(), breaker.getScore());
-                Location blockLocation = event.getBlock().getLocation();
-                event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + 0.5, blockLocation.getY() + 0.5, blockLocation.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.5);
-            } else if (!blockName.equals(Material.STONE.name())) {
-                event.setCancelled(true);
-            }
+        event.setDropItems(false);
+        if (blockName.equals(oreName)) {
+            breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
+            scoreboard.setScore(breaker.getName(), breaker.getScore());
+            Location blockLocation = event.getBlock().getLocation();
+            event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + 0.5, blockLocation.getY() + 0.5, blockLocation.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.5);
+        } else if (!blockName.equals(Material.STONE.name())) {
+            event.setCancelled(true);
         }
     }
 
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player killed = findPlayer(event.getEntity().getUniqueId());
 
-        if(getJoinPlayers().contains(killed)) {
-            if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
-                Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
-                LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
+        if (event.getEntity().getKiller() instanceof org.bukkit.entity.Player) {
+            Player killer = findPlayer(event.getEntity().getKiller().getUniqueId());
+            LOGGER.info(String.format("onPlayerDeathEvent: %s -> %s", event.getEntity().getName(), event.getEntity().getKiller().getName()));
 
-                killer.setScore(killer.getScore() + killed.getBounty());
-                killer.setBounty(killer.getBounty() + 1);
+            killer.setScore(killer.getScore() + killed.getBounty());
+            killer.setBounty(killer.getBounty() + 1);
 
-                killed.setBounty(0);
+            killed.setBounty(0);
 
-                scoreboard.setScore(killer.getName(), killer.getScore());
-            }
-            killed.setPlayingGame(false);
-
-            org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(killed.getUuid());
-            bukkitKilled.teleport(killed.getSpawnLocation());
-            bukkitKilled.setGameMode(GameMode.SPECTATOR);
+            scoreboard.setScore(killer.getName(), killer.getScore());
         }
+
+        org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(killed.getUuid());
+        bukkitKilled.teleport(killed.getRespawnLocation());
+        bukkitKilled.setGameMode(GameMode.SPECTATOR);
     }
 
     public void onRespawnEvent(PlayerRespawnEvent event) {
         Player player = findPlayer(event.getPlayer().getUniqueId());
-        if(getJoinPlayers().contains(player)) {
-            event.getPlayer().teleport(player.getSpawnLocation());
-        }
+        event.getPlayer().teleport(player.getRespawnLocation());
     }
 
     @Override
@@ -166,7 +158,7 @@ public class MineAndFightLogic extends Game implements Listener {
             Location location = playerNumLoc(world, minVec, maxVec, i);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
-            p.setSpawnLocation(location);
+            p.setRespawnLocation(location);
 
             p.setFirstInventory(bukkitPlayer.getInventory());
             bukkitPlayer.getInventory().clear();
@@ -211,6 +203,7 @@ public class MineAndFightLogic extends Game implements Listener {
             p.setScore(0);
             game.removePlayer(p.getUuid());
             scoreboard.resetScoreboard(bukkitPlayer);
+            p.setPlayingGame(false);
         });
 
         ranking = sort(players, scores);
