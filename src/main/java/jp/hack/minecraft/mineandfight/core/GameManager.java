@@ -156,7 +156,7 @@ public class GameManager implements Listener {
         for(Iterator<Game> ite=runningGames.values().iterator(); ite.hasNext();){
             Game g = ite.next();
             Player player = g.findPlayer(event.getPlayer().getUniqueId());
-            if (player != null && player.isPlayingGame()) {
+            if (player != null) {
                 g.onRespawnEvent(event);
                 break;
             }
