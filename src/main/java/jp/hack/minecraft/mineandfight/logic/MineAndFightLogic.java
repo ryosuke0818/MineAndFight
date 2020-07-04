@@ -77,10 +77,8 @@ public class MineAndFightLogic extends Game implements Listener {
     public void onRespawnEvent(PlayerRespawnEvent event) {
         Player player = findPlayer(event.getPlayer().getUniqueId());
         org.bukkit.entity.Player bukkitKilled = Bukkit.getPlayer(player.getUuid());
-
+        bukkitKilled.setGameMode(GameMode.SPECTATOR);
         event.setRespawnLocation(player.getRespawnLocation());
-
-        Bukkit.getScheduler().runTask(this.plugin, () -> bukkitKilled.setGameMode(GameMode.SPECTATOR));
     }
 
     @Override
