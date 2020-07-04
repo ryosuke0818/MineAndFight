@@ -149,6 +149,14 @@ public class MineAndFightLogic extends Game implements Listener {
 
         // scoreboard = new Scoreboard(gameId);
 
+        List<Location> spawns = new ArrayList<>();
+        spawns.add(new Location(world, minVec.getBlockX() +1, minVec.getBlockY() +1, minVec.getBlockZ() +1));
+        spawns.add(new Location(world, maxVec.getBlockX() -1, minVec.getBlockY() +1, minVec.getBlockZ() +1));
+        spawns.add(new Location(world, maxVec.getBlockX() -1 , minVec.getBlockY() +1, maxVec.getBlockZ() -1));
+        spawns.add(new Location(world, minVec.getBlockX() +1, minVec.getBlockY() +1, maxVec.getBlockZ() -1));
+
+
+
         //TITLE
         List<Player> players = new ArrayList(getJoinPlayers());
         for(int i=0; i<players.size(); i++) {
@@ -158,10 +166,10 @@ public class MineAndFightLogic extends Game implements Listener {
             scoreboard.setScoreboard(bukkitPlayer);
 
             p.setFirstLocation(bukkitPlayer.getLocation());
-            Location location = playerNumLoc(world, minVec, maxVec, i);
+            Location location = spawns.get(i);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
-            p.setRespawnLocation(location);
+            //p.setRespawnLocation(location);
 
             p.setFirstInventory(bukkitPlayer.getInventory());
             bukkitPlayer.getInventory().clear();
