@@ -190,6 +190,7 @@ public class MineAndFightLogic extends Game implements Listener {
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 
         Bukkit.broadcastMessage("game start");
+        //おはよおおおおおおおおお
     }
 
     @Override
