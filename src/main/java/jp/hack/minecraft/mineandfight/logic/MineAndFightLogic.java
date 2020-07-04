@@ -3,11 +3,13 @@ package jp.hack.minecraft.mineandfight.logic;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.WorldEditorUtil;
 import org.bukkit.*;
+import org.bukkit.entity.Firework;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -170,7 +172,7 @@ public class MineAndFightLogic extends Game implements Listener {
             }
             bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-            bukkitPlayer.sendTitle(ChatColor.GREEN +"Game Start", "", 1, 2, 1);
+            bukkitPlayer.sendTitle(ChatColor.GREEN +"GAME START", "", 1, 2, 1);
         }
 
         timeBar = new TimeBar(plugin);
@@ -200,7 +202,25 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.teleport(p.getFirstLocation());
             bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
-            //bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER");
+            bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER", "", 1, 2, 1);
+            Firework firework = bukkitPlayer.getWorld()
+                    .spawn(bukkitPlayer.getLocation(), Firework.class);
+
+            FireworkMeta meta = firework.getFireworkMeta();
+
+            FireworkEffect.Builder effect = FireworkEffect.builder();
+
+            effect.with(FireworkEffect.Type.BALL_LARGE);
+            effect.withColor(Color.YELLOW);
+            effect.withFade(Color.RED);
+            effect.flicker(true);
+            effect.trail(true);
+
+            meta.addEffect(effect.build());
+
+            meta.setPower(1);
+
+            firework.setFireworkMeta(meta);
             p.setBounty(0);
             p.setScore(0);
             game.removePlayer(p.getUuid());
