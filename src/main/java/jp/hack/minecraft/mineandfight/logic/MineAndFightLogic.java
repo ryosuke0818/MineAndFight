@@ -219,7 +219,7 @@ public class MineAndFightLogic extends Game implements Listener {
 
             meta.addEffect(effect.build());
 
-            meta.setPower(1);
+            meta.setPower(2);
 
             firework.setFireworkMeta(meta);
 
