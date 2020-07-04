@@ -171,6 +171,16 @@ public class GameManager implements Listener {
         return runningGames.containsKey(gameId);
     }
 
+    public Collection<Player> getPlayers(String gameId){
+        Game game = games.get(gameId);
+        if(game!=null){
+            return game.getJoinPlayers();
+        }
+
+        return new ArrayList<Player>();
+    }
+
+
     public void start(String gameId){
         Game game = games.get(gameId);
         // Scoreboard scoreboard = new Scoreboard(gameId, ChatColor.GREEN +"SCORE");

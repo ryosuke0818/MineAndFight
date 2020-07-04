@@ -35,9 +35,13 @@ public class GameStartCommand implements SubCommand {
         }
         String gameId = args[0];
         if(GameManager.getInstance().isCreated(gameId)) {
-            if(!GameManager.getInstance().isRunning(gameId)){
-                GameManager.getInstance().start(gameId);
-                return true;
+            if(!GameManager.getInstance().isRunning(gameId)) {
+                if (GameManager.getInstance().getPlayers(gameId).size() > 0){
+                    GameManager.getInstance().start(gameId);
+                    return true;
+                } else {
+                    sender.sendMessage(I18n.tl("error.command.noplayer.game", gameId));
+                }
             }else{
                 sender.sendMessage(I18n.tl("error.command.started.game", gameId));
             }
