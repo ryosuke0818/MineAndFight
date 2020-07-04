@@ -203,6 +203,7 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.getInventory().setContents(p.getFirstInventory().getContents());
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
             bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME OVER", "", 1, 2, 1);
+
             Firework firework = bukkitPlayer.getWorld()
                     .spawn(bukkitPlayer.getLocation(), Firework.class);
 
@@ -221,6 +222,7 @@ public class MineAndFightLogic extends Game implements Listener {
             meta.setPower(1);
 
             firework.setFireworkMeta(meta);
+
             p.setBounty(0);
             p.setScore(0);
             game.removePlayer(p.getUuid());
