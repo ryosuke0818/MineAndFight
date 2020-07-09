@@ -51,7 +51,9 @@ public class MineAndFightLogic extends Game implements Listener {
             breaker.setScore(breaker.getScore() + (breaker.getBounty() + 1));
             scoreboard.setScore(breaker.getName(), breaker.getScore());
             Location blockLocation = event.getBlock().getLocation();
-            event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + 0.5, blockLocation.getY() + 0.5, blockLocation.getZ() + 0.5, 10, 0.5, 0.5, 0.5, 0.5);
+            for (int i = 0; i < 25; i++) {
+                event.getBlock().getWorld().spawnParticle(Particle.COMPOSTER, blockLocation.getX() + Math.random(), blockLocation.getY() + Math.random(), blockLocation.getZ() + Math.random(), 10, 0.5, 0.5, 0.5, 0.5);
+            }
         } else if (!blockName.equals(Material.STONE.name())) {
             event.setCancelled(true);
         }
