@@ -42,7 +42,7 @@ public class LeaveSubCommand implements SubCommand {
             game.removePlayer(player.getUniqueId());
             sender.sendMessage(ChatColor.GREEN +"Successed: You left " + game.getId() + ".");
         } else {
-            sender.sendMessage(ChatColor.RED +"Error: No such game.");
+            sender.sendMessage(I18n.tl("error.command.uncreated.game"));
             return false;
         }
 

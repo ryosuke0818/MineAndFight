@@ -54,7 +54,7 @@ public class JoinSubCommand implements SubCommand {
 
                 Player player = new Player(bukkitPlayer.getUniqueId());
                 game.addPlayer(player);
-                bukkitPlayer.sendMessage(ChatColor.GREEN +"Successed: You joined "+gameId+".");
+                bukkitPlayer.sendMessage(ChatColor.GREEN +"Succeed: You joined "+gameId+".");
                 game.getJoinPlayers().stream().forEach(p->{
                     org.bukkit.entity.Player bP = Bukkit.getPlayer(p.getUuid());
                     bP.sendMessage(ChatColor.GREEN +player.getName()+" joined us!");
@@ -67,11 +67,10 @@ public class JoinSubCommand implements SubCommand {
                 }
                 return true;
             } else {
-                bukkitPlayer.sendMessage(ChatColor.RED +"Error: No such game.");
                 bukkitPlayer.sendMessage(I18n.tl("error.command.uncreated.game", gameId));
             }
         } else {
-            bukkitPlayer.sendMessage(ChatColor.RED +"Error: You have already join game!");
+            bukkitPlayer.sendMessage(I18n.tl("error.command.joined.game", gameId));
         }
         return false;
     }

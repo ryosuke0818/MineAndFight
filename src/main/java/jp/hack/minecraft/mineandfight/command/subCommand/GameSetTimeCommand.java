@@ -5,10 +5,10 @@ import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +40,19 @@ public class GameSetTimeCommand implements SubCommand {
         try {
             newTime = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
-            sender.sendMessage("Failed! Please input a number.");
+            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
             return false;
         }
 
         GameManager gameManager = GameManager.getInstance();
         Game game = gameManager.getGame(gameId);
-        game.setGameTime(newTime * 1000);
 
-        sender.sendMessage("Succeced!");
+        if (gameManager.isRunning(gameId)) {
+            sender.sendMessage(I18n.tl("error.command.started.game",gameId));
+        } else {
+            game.setGameTime(newTime * 1000);
+            sender.sendMessage(ChatColor.GREEN+"Succeed: You set a new game time.");
+        }
 
         return true;
     }

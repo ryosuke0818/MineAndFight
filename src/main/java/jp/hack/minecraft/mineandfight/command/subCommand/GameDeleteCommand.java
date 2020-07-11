@@ -46,9 +46,9 @@ public class GameDeleteCommand implements SubCommand {
             gameManager.deleteGame(gameId);
             mainConfiguration.deleteGame(gameId);
 
-            sender.sendMessage(ChatColor.GREEN + "Successed: You deleted " + gameId + ".");
+            sender.sendMessage(ChatColor.GREEN + "Succeed: You deleted " + gameId + ".");
         } else {
-            sender.sendMessage(ChatColor.RED + "Error: No such game.");
+            sender.sendMessage(I18n.tl("error.command.uncreated.game"));
         }
 
         return true;
