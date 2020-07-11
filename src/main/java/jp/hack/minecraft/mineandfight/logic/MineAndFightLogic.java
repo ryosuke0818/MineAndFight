@@ -147,6 +147,8 @@ public class MineAndFightLogic extends Game implements Listener {
                                     });
                         });
 
+        //ステージの底と壁をブロックで囲む
+
         // scoreboard = new Scoreboard(gameId);
 
         List<Location> spawns = new ArrayList<>();

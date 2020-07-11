@@ -8,6 +8,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.util.BoundingBox;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -150,7 +151,7 @@ public abstract class Game implements Runnable {
 
     public synchronized BoundingBox getGameArea(){
         if(gameArea == null) {
-            gameArea = BoundingBox.of(configuration.getPos1(), configuration.getPos2());
+            gameArea = BoundingBox.of(configuration.getPos1(), configuration.getPos2().add(new Vector(1,1,1)));
         }
         return gameArea;
     }
