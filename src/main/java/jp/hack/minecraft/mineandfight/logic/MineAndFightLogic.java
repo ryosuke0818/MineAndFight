@@ -20,8 +20,6 @@ import java.util.stream.IntStream;
 public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
-    private GameManager gameManager = GameManager.getInstance();
-    private Game game;
     public List<String> ranking;
     private Scoreboard scoreboard;
     private TimeBar timeBar;
@@ -35,8 +33,6 @@ public class MineAndFightLogic extends Game implements Listener {
         super(plugin, id);
         gameId = id;
         scoreboard = new Scoreboard(id, ChatColor.GREEN +"SCORE");
-        game = gameManager.getGame(id);
-        gameTime = game.getGameTime();
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -194,11 +190,11 @@ public class MineAndFightLogic extends Game implements Listener {
         }
 
         timeBar = new TimeBar(plugin);
+        gameTime = this.getGameTime();
 
         //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 
         Bukkit.broadcastMessage("game start");
-        //おはよおおおおおおおおお
     }
 
     @Override
@@ -244,13 +240,12 @@ public class MineAndFightLogic extends Game implements Listener {
 
             p.setBounty(0);
             p.setScore(0);
-            game.removePlayer(p.getUuid());
+            this.removePlayer(p.getUuid());
             scoreboard.resetScoreboard(bukkitPlayer);
             p.setPlayingGame(false);
         });
 
         ranking = sort(players, scores);
-
         timeBar.stop();
 
         Bukkit.broadcastMessage("game stop");
@@ -261,7 +256,7 @@ public class MineAndFightLogic extends Game implements Listener {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
         System.out.println(dt);
         if(dt > gameTime) {
-            timeBar.setProgress((gameTime /dt));
+            timeBar.setProgress( ( dt / gameTime ) * 100 );
             return false;
         }
         return true;

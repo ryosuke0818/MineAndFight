@@ -157,11 +157,12 @@ public abstract class Game implements Runnable {
     }
 
     public long getGameTime() {
-        return gameTime;
+        return configuration.getLong("gametime");
     }
 
     public void setGameTime(long newTime) {
-        gameTime = newTime;
+        configuration.set("gametime", newTime);
+        configuration.save();
     }
 
     abstract public void onStart();
