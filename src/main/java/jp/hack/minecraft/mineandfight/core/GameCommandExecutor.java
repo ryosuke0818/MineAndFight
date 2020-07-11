@@ -58,9 +58,7 @@ public abstract class GameCommandExecutor implements SubCommand {
         if (args.length == 0 || args[0].length() == 0) {
             return commands;
         } else if (args.length == 1) {
-            for (String s : commands) {
-                if (s.startsWith(args[0])) return Collections.singletonList(s);
-            }
+            return commands.stream().filter(s->s.startsWith(args[0])).collect(Collectors.toList());
         } else {
             SubCommand subCommand = subCommands.get(args[0]);
             if(subCommand != null) return subCommand.onTabComplete(sender, command, args[0], Arrays.copyOfRange(args, 1, args.length));
