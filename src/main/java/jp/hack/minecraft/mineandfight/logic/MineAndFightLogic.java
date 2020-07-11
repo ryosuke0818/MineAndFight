@@ -148,7 +148,12 @@ public class MineAndFightLogic extends Game implements Listener {
                                     });
                         });
 
-        //ステージの底と壁をブロックで囲む
+        //ステージの底を生成
+        for(int x=minVec.getBlockX(); x<=maxVec.getBlockX(); x++){
+            for(int z=minVec.getBlockZ(); z<=maxVec.getBlockZ(); z++){
+                new Location(world,x, minVec.getBlockY()-1, z).getBlock().setType(Material.BEDROCK);
+            }
+        }
 
         // scoreboard = new Scoreboard(gameId);
 
