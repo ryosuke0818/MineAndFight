@@ -25,12 +25,13 @@ public abstract class Game implements Runnable {
     private transient boolean isFinish = false;
     protected GameConfiguration configuration;
     private transient BoundingBox gameArea;
-    private long gameTime = 1 * 1000 * 60;
+    private long gameTime;
 
     public Game(GamePlugin plugin, String id){
         this.plugin = plugin;
         this.id = id;
         this.configuration = GameConfiguration.create(plugin, id);
+        gameTime =  1 * 1000 * 60;
     }
 
     public String getId(){

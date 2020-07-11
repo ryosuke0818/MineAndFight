@@ -14,12 +14,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.IntStream;
 
 public class MineAndFightLogic extends Game implements Listener {
 
     private final String gameId;
+    private Game game;
     public List<String> ranking;
     private Scoreboard scoreboard;
     private TimeBar timeBar;
@@ -159,22 +161,25 @@ public class MineAndFightLogic extends Game implements Listener {
         spawns.add(new Location(world, maxVec.getBlockX() -1 , minVec.getBlockY() +1, maxVec.getBlockZ() -1));
         spawns.add(new Location(world, minVec.getBlockX() +1, minVec.getBlockY() +1, maxVec.getBlockZ() -1));
 
-
+        gameTime = this.getGameTime();
+        timeBar = new TimeBar(plugin);
 
         //TITLE
         List<Player> players = new ArrayList(getJoinPlayers());
         for(int i=0; i<players.size(); i++) {
             Player p = players.get(i);
             org.bukkit.entity.Player bukkitPlayer = Bukkit.getPlayer(p.getUuid());
+
             scoreboard.setScore(p.getName(), 0);
             scoreboard.setScoreboard(bukkitPlayer);
+
+            timeBar.put(bukkitPlayer);
 
             p.setFirstLocation(bukkitPlayer.getLocation());
 
             Location location = spawns.get(i);
             new Location(world, location.getBlockX(), location.getBlockY(), location.getBlockZ()).getBlock().setType(Material.AIR);
             new Location(world, location.getBlockX(), location.getBlockY()+1, location.getBlockZ()).getBlock().setType(Material.AIR);
-            //p.setRespawnLocation(location);
 
             p.setFirstInventory(bukkitPlayer.getInventory());
             bukkitPlayer.getInventory().clear();
@@ -188,11 +193,6 @@ public class MineAndFightLogic extends Game implements Listener {
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
             bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME START", "", 20, 30, 20);
         }
-
-        timeBar = new TimeBar(plugin);
-        gameTime = this.getGameTime();
-
-        //プレイヤーを初期ポイントに移動する、四隅の初期値をランダムに選択しプレイヤーを移動する
 
         Bukkit.broadcastMessage("game start");
     }
@@ -255,8 +255,8 @@ public class MineAndFightLogic extends Game implements Listener {
     public boolean onTask(long dt) {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
         System.out.println(dt);
-        if(dt > gameTime) {
-            timeBar.setProgress( ( dt / gameTime ) * 100 );
+        timeBar.setProgress( (double) dt / gameTime);
+        if(dt + 1000 > gameTime) {
             return false;
         }
         return true;

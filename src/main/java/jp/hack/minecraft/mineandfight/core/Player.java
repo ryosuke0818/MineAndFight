@@ -20,8 +20,6 @@ public class Player {
     public Player(UUID uuid){
         this.uuid = uuid;
         name = Bukkit.getPlayer(uuid).getName();
-        setFirstLocation(Bukkit.getPlayer(uuid).getLocation());
-        setFirstInventory(Bukkit.getPlayer(uuid).getInventory());
     }
 
     public UUID getUuid() {
