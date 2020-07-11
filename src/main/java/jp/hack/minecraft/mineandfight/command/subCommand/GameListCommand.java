@@ -31,11 +31,14 @@ public class GameListCommand implements SubCommand {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         MainConfiguration configuration = plugin.getConfiguration();
         List<String> games = configuration.getGameList();
-        StringBuilder builder = new StringBuilder();
+        if (games.isEmpty()) {
+            sender.sendMessage("ゲームはまだ生成されていません");
+        } else {
+            StringBuilder builder = new StringBuilder();
 
-        games.stream().forEach(s -> builder.append(s).append(" "));
-        sender.sendMessage(I18n.tl("message.command.list",builder.toString()));
-
+            games.stream().forEach(s -> builder.append(s).append(" "));
+            sender.sendMessage(I18n.tl("message.command.list", builder.toString()));
+        }
         return true;
     }
 
