@@ -1,16 +1,13 @@
 package jp.hack.minecraft.mineandfight.command.subCommand;
 
-import jp.hack.minecraft.mineandfight.Main;
 import jp.hack.minecraft.mineandfight.core.*;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
-import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
