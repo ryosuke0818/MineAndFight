@@ -10,6 +10,7 @@ public class HostSubCommand extends GameCommandExecutor {
         addSubCommand(new GameCreateCommand(plugin));
         addSubCommand(new GameDeleteCommand(plugin));
         addSubCommand(new GameListCommand(plugin));
+        addSubCommand(new GameSetTimeCommand(plugin));
     }
 
     @Override

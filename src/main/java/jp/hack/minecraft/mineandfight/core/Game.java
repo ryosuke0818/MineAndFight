@@ -2,7 +2,6 @@ package jp.hack.minecraft.mineandfight.core;
 
 import jp.hack.minecraft.mineandfight.core.utils.Threading;
 import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
-import org.bukkit.Bukkit;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -26,6 +25,7 @@ public abstract class Game implements Runnable {
     private transient boolean isFinish = false;
     protected GameConfiguration configuration;
     private transient BoundingBox gameArea;
+    private long gameTime = 1 * 1000 * 60;
 
     public Game(GamePlugin plugin, String id){
         this.plugin = plugin;
@@ -154,6 +154,14 @@ public abstract class Game implements Runnable {
             gameArea = BoundingBox.of(configuration.getPos1(), configuration.getPos2().add(new Vector(1,1,1)));
         }
         return gameArea;
+    }
+
+    public long getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(long newTime) {
+        gameTime = newTime;
     }
 
     abstract public void onStart();

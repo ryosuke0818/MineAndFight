@@ -25,7 +25,7 @@ public class MineAndFightLogic extends Game implements Listener {
     public List<String> ranking;
     private Scoreboard scoreboard;
     private TimeBar timeBar;
-    private long gametime = 1 * 1000 * 60;
+    private long gameTime;
     private final double MIN_EMERALDPERCENTAGE = 2;
     private final double MAX_EMERALDPERCENTAGE = 4;
     private final double BALANCE = 2.0;
@@ -36,6 +36,7 @@ public class MineAndFightLogic extends Game implements Listener {
         gameId = id;
         scoreboard = new Scoreboard(id, ChatColor.GREEN +"SCORE");
         game = gameManager.getGame(id);
+        gameTime = game.getGameTime();
     }
 
     public void onBlockBreakEvent(BlockBreakEvent event){
@@ -182,7 +183,7 @@ public class MineAndFightLogic extends Game implements Listener {
             for (int j=0; j<PotionEffectType.values().length; j++) {
                 bukkitPlayer.removePotionEffect(PotionEffectType.values()[j]);
             }
-            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gametime/1000)) * 20, 0));
+            bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, (int) (Math.floor(gameTime /1000)) * 20, 0));
             bukkitPlayer.setGameMode(GameMode.SURVIVAL);
             bukkitPlayer.sendTitle(ChatColor.GREEN+"GAME START", "", 20, 30, 20);
         }
@@ -254,8 +255,8 @@ public class MineAndFightLogic extends Game implements Listener {
     public boolean onTask(long dt) {
         //TODO　１秒単位に呼ばれる処理　Falseを返すとゲームは終了します。DTは経過時間（秒）
         System.out.println(dt);
-        if(dt > gametime) {
-            timeBar.setProgress((gametime/dt));
+        if(dt > gameTime) {
+            timeBar.setProgress((gameTime /dt));
             return false;
         }
         return true;
