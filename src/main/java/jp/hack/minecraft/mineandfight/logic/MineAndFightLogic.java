@@ -14,7 +14,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.IntStream;
 

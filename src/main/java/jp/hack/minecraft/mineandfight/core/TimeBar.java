@@ -10,7 +10,7 @@ public class TimeBar {
     BossBar bossBar;
 
     public TimeBar(Plugin plugin) {
-        bossBar = plugin.getServer().createBossBar("Timer", BarColor.GREEN, BarStyle.SOLID);
+        bossBar = plugin.getServer().createBossBar("GameTime", BarColor.GREEN, BarStyle.SOLID);
         bossBar.setVisible(true);
         bossBar.setProgress(1.0);
     }

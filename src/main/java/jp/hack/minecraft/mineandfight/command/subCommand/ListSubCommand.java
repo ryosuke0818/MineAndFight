@@ -5,10 +5,9 @@ import jp.hack.minecraft.mineandfight.core.GameManager;
 import jp.hack.minecraft.mineandfight.core.GamePlugin;
 import jp.hack.minecraft.mineandfight.core.SubCommand;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
-import jp.hack.minecraft.mineandfight.utils.GameConfiguration;
+import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 public class ListSubCommand implements SubCommand {
     GamePlugin plugin;
 
-    public ListSubCommand(GamePlugin plugin) {
+    public ListSubCommand(GamePlugin plugin){
         this.plugin = plugin;
     }
 
@@ -32,25 +31,17 @@ public class ListSubCommand implements SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(args.length < 1){
-            sender.sendMessage(I18n.tl("error.command.invalid.arguments"));
-            return false;
+        MainConfiguration configuration = plugin.getConfiguration();
+        List<String> games = configuration.getGameList();
+        if (games.isEmpty()) {
+            sender.sendMessage("ゲームはまだ生成されていません");
+        } else {
+            StringBuilder builder = new StringBuilder();
+
+            games.stream().forEach(s -> builder.append(s).append(" "));
+            sender.sendMessage(I18n.tl("message.command.list", builder.toString()));
         }
-        Player player = (Player) sender;
-
-        String gameId = args[0];
-        GameManager gameManager = GameManager.getInstance();
-        Game game = gameManager.getGame(gameId);
-        GameConfiguration configuration = game.getConfiguration();
-        StringBuilder builder = new StringBuilder();
-
-        if(configuration.isCreated()) {
-            game.getJoinPlayers().stream().forEach(p -> builder.append(p).append(" "));
-            player.sendMessage(I18n.tl("message.command.list",builder.toString()));
-
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override
