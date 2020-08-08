@@ -1,10 +1,7 @@
 package jp.hack.minecraft.mineandfight.core;
 
-import jp.hack.minecraft.mineandfight.core.utils.Configuration;
 import jp.hack.minecraft.mineandfight.core.utils.I18n;
 import jp.hack.minecraft.mineandfight.utils.MainConfiguration;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -14,7 +11,6 @@ public abstract class GamePlugin extends JavaPlugin {
     protected static final Logger LOGGER = Logger.getLogger("MineAndFightLogic");
     private transient MainConfiguration configuration;
     private transient I18n i18n;
-    private static Economy econ = null;
 
     @Override
     public void onEnable() {
@@ -31,11 +27,6 @@ public abstract class GamePlugin extends JavaPlugin {
         this.configuration = new MainConfiguration(new File(getDataFolder(), "config.yml"));
         this.configuration.load();
 
-        if (!setupEconomy() ) {
-            LOGGER.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-            //getServer().getPluginManager().disablePlugin(this);
-            //return;
-        }
     }
 
     @Override
@@ -48,22 +39,6 @@ public abstract class GamePlugin extends JavaPlugin {
         if (this.i18n != null) {
             this.i18n.onDisable();
         }
-    }
-
-    public Economy getEconomy(){
-        return econ;
-    }
-
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = rsp.getProvider();
-        return econ != null;
     }
 
     public MainConfiguration getConfiguration() {
